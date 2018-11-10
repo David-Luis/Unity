@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (other.CompareTag("Enemy"))
         {
-            GameController.instance.ResetGame();
+            GameController.instance.GameOver();
         }
     }
 }

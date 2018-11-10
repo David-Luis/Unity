@@ -13,7 +13,9 @@ public class GameController : MonoBehaviour {
 
     public static GameController instance;
 
-	void Awake ()
+    HUDController hudController;
+
+    void Awake ()
     {
 		if (instance == null)
         {
@@ -24,14 +26,15 @@ public class GameController : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        instance.hudController = FindObjectOfType<HUDController>();
+
         DontDestroyOnLoad(gameObject);
-	}
+    }
 
     public void IncreaseScore(int amount)
     {
         score += amount;
-
-        print("new score: " + score);
+        hudController.UpdateHUD();
     }
 
     public void ResetGame()
@@ -39,6 +42,11 @@ public class GameController : MonoBehaviour {
         score = 0;
         currentLevel = 1;
         SceneManager.LoadScene("Level1");
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 
     public void IncreaseLevel()
@@ -53,5 +61,6 @@ public class GameController : MonoBehaviour {
         }
 
         SceneManager.LoadScene("Level" + currentLevel);
+        hudController.UpdateHUD();
     }
 }
