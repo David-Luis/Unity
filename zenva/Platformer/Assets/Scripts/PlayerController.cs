@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
     public float walkSpeed = 2;
     public float jumpSpeed = 4;
 
+    public float cameraDistanceZ = 6;
+
     private Rigidbody _body;
     private Collider _collider;
 
@@ -25,7 +27,9 @@ public class PlayerController : MonoBehaviour {
     {
         Walk();
         Jump();
-	}
+        CameraFollowPlayer();
+
+    }
 
     void Walk()
     {
@@ -36,6 +40,13 @@ public class PlayerController : MonoBehaviour {
         Vector3 newPos = transform.position + movement;
 
         _body.MovePosition(newPos);
+
+        if (hAxis != 0 || vAxis != 0)
+        {
+            Vector3 direction = new Vector3(hAxis, 0, vAxis);
+
+            _body.rotation = Quaternion.LookRotation(direction);
+        }
     }
 
     void Jump()
@@ -88,6 +99,16 @@ public class PlayerController : MonoBehaviour {
         else if (other.CompareTag("Enemy"))
         {
             GameController.instance.GameOver();
+        }
+    }
+
+    private void CameraFollowPlayer()
+    {
+        if (Camera.main)
+        {
+            Vector3 cameraPosition = Camera.main.transform.position;
+            cameraPosition.z = transform.position.z - cameraDistanceZ;
+            Camera.main.transform.position = cameraPosition;
         }
     }
 }
