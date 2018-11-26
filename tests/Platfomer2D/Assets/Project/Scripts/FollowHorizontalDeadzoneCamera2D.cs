@@ -10,7 +10,7 @@ public class FollowHorizontalDeadzoneCamera2D : MonoBehaviour {
 
     public Renderer target;
     public Vector2 deadzone;
-    public float verticalEasing = 0.04f;
+    public float verticalEasing = 0.07f;
 
     private Camera _camera;
 
@@ -19,7 +19,7 @@ public class FollowHorizontalDeadzoneCamera2D : MonoBehaviour {
         _camera = GetComponent<Camera>();
     }
 
-    void Update ()
+    void Update()
     {
         float localX = target.transform.position.x - transform.position.x;
 
@@ -34,8 +34,7 @@ public class FollowHorizontalDeadzoneCamera2D : MonoBehaviour {
             newPosition.x += localX - deadzone.y;
         }
 
-        float _currentVelocity = 0;
-        newPosition.y = Mathf.SmoothDamp(newPosition.y, target.transform.position.y, ref _currentVelocity, verticalEasing);
+        newPosition.y += (target.transform.position.y - _camera.transform.position.y) * verticalEasing;
         //newPosition.y = target.transform.position.y;
 
         _camera.transform.position = newPosition;
