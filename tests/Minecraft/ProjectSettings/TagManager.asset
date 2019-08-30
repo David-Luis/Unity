@@ -38,15 +38,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 3935322553
-    locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Snake
-    uniqueID: 1583114015
-    locked: 0
-  - name: Over
-    uniqueID: 3414094635
     locked: 0

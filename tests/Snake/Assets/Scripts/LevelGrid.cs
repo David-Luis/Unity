@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey;
 
-public class LevelGrid : MonoBehaviour
+public class LevelGrid
 {
     private Vector2Int foodGridPosition;
     public int width;
