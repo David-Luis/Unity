@@ -11,8 +11,8 @@ public class GameHandler : MonoBehaviour
 
     void Start()
     {
-        CreateSand();
-        CreateWater();
+        //CreateSand();
+        //CreateWater();
         CreateEarth();
     }
 
@@ -28,7 +28,7 @@ public class GameHandler : MonoBehaviour
 
     private void CreateEarth()
     {
-        InstantiateVoxels(new Vector2Int(-10, 10), new Vector2Int(0, 1), new Vector2Int(0, 10), earth);
+        InstantiateVoxels(new Vector2Int(-50, 50), new Vector2Int(0, 1), new Vector2Int(-50, 50), earth);
     }
 
     private void InstantiateVoxels(Vector2Int horizontal, Vector2Int vertical, Vector2Int depth, GameObject gameObject)
