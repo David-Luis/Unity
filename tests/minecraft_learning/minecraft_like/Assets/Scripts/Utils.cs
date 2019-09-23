@@ -2,95 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainUtils : MonoBehaviour
-{
-    const float PERSISTENCE = 0.5f;
+public class Utils {
 
-    const int TERRAIN_MIN_HEIGHT = 0;
-    const int TERRAIN_MAX_HEIGHT = 150;
-    const float TERRAIN_SMOOTH = 0.01f;
-    const int TERRAIN_OCTAVES = 4;
+	static int maxHeight = 150;
+	static float smooth = 0.01f;
+	static int octaves = 4;
+	static float persistence = 0.5f;
 
-    const int STONE_DEPTH = 15;
-    const float STONE_SMOOTH = 0.02f;
-    const int STONE_OCTAVES = 5;
+	public static int GenerateStoneHeight(float x, float z)
+	{
+		float height = Map(0,maxHeight-5, 0, 1, fBM(x*smooth*2,z*smooth*2,octaves+1,persistence));
+		return (int) height;
+	}
 
-    const float CAVES_SMOOTH = 0.1f;
-    const float CAVES_CUTOFF = 0.42f;
-    const int CAVES_OCTAVES = 3;
+	public static int GenerateHeight(float x, float z)
+	{
+		float height = Map(0,maxHeight, 0, 1, fBM(x*smooth,z*smooth,octaves,persistence));
+		return (int) height;
+	}
 
-    const float REDSTONE_SMOOTH = 0.03f;
-    const int REDSTONE_OCTAVES = 3;
-    const float REDSTONE_CUTOFF = 0.41f;
-    const int REDSTONE_MAX_HEIGHT = 20;
-
-    const float DIAMONDS_SMOOTH = 0.01f;
-    const int DIAMOND_OCTAVES = 2;
-    const float DIAMOND_CUTOFF = 0.4f;
-    const int DIAMOND_MAX_HEIGHT = 25;
-
-    public static int GenerateStoneHeight(float x, float z)
+    public static float fBM3D(float x, float y, float z, float sm, int oct)
     {
-        float height = MapNormalized(TERRAIN_MIN_HEIGHT, TERRAIN_MAX_HEIGHT - STONE_DEPTH, fBM(x * STONE_SMOOTH, z * STONE_SMOOTH, STONE_OCTAVES, PERSISTENCE));
+        float XY = fBM(x*sm,y*sm,oct,0.5f);
+        float YZ = fBM(y*sm,z*sm,oct,0.5f);
+        float XZ = fBM(x*sm,z*sm,oct,0.5f);
 
-        return (int)height;
+        float YX = fBM(y*sm,x*sm,oct,0.5f);
+        float ZY = fBM(z*sm,y*sm,oct,0.5f);
+        float ZX = fBM(z*sm,x*sm,oct,0.5f);
+
+        return (XY+YZ+XZ+YX+ZY+ZX)/6.0f;
     }
 
-    public static int GenerateHeight(float x, float z)
+	static float Map(float newmin, float newmax, float origmin, float origmax, float value)
     {
-        float height = MapNormalized(TERRAIN_MIN_HEIGHT, TERRAIN_MAX_HEIGHT, fBM(x * TERRAIN_SMOOTH, z * TERRAIN_SMOOTH, TERRAIN_OCTAVES, PERSISTENCE));
-
-        return (int)height;
+        return Mathf.Lerp (newmin, newmax, Mathf.InverseLerp (origmin, origmax, value));
     }
 
-    public static bool IsCave(float x, float y, float z)
-    {
-        return fBM3D(x, y, z, CAVES_SMOOTH, CAVES_OCTAVES) < CAVES_CUTOFF;
-    }
-    
-    public static bool IsDiamond(float x, float y, float z)
-    {
-        return fBM3D(x, y, z, DIAMONDS_SMOOTH, DIAMOND_OCTAVES) < DIAMOND_CUTOFF && y <= DIAMOND_MAX_HEIGHT;
-    }
-
-    public static bool IsRedstone(float x, float y, float z)
-    {
-        return fBM3D(x, y, z, REDSTONE_SMOOTH, REDSTONE_OCTAVES) < REDSTONE_CUTOFF && y <= REDSTONE_MAX_HEIGHT;
-    }
-
-    static float MapNormalized(float newmin, float newmax, float value)
-    {
-        return Mathf.Lerp(newmin, newmax, Mathf.InverseLerp(0, 1, value));
-    }
-
-    static float fBM(float x, float z, int octaves, float persistence)
+    static float fBM(float x, float z, int oct, float pers)
     {
         float total = 0;
         float frequency = 1;
         float amplitude = 1;
         float maxValue = 0;
-        float offset = 32000f; //? to avoid have negative numbers, probably can be improved
-        for (int i = 0; i < octaves; i++)
+        float offset = 32000f;
+        for(int i = 0; i < oct ; i++) 
         {
-            total += Mathf.PerlinNoise((x + offset) * frequency, (z+ offset) * frequency) * amplitude;
-            maxValue += amplitude;
-            amplitude *= persistence;
-            frequency *= 2;
+                total += Mathf.PerlinNoise((x+offset) * frequency, (z+offset) * frequency) * amplitude;
+
+                maxValue += amplitude;
+
+                amplitude *= pers;
+                frequency *= 2;
         }
 
-        return total / maxValue;
-    }
-
-    static float fBM3D(float x, float y, float z, float smooth, int octaves)
-    {
-        float XY = fBM(x * smooth, y * smooth, octaves, 0.5f);
-        float YZ = fBM(y * smooth, z * smooth, octaves, 0.5f);
-        float XZ = fBM(x * smooth, z * smooth, octaves, 0.5f);
-                                                           
-        float YX = fBM(y * smooth, x * smooth, octaves, 0.5f);
-        float ZY = fBM(z * smooth, y * smooth, octaves, 0.5f);
-        float ZX = fBM(z * smooth, x * smooth, octaves, 0.5f);
-
-        return (XY + YZ + XZ + YX + ZY + ZX) / 6.0f;
+        return total/maxValue;
     }
 }
