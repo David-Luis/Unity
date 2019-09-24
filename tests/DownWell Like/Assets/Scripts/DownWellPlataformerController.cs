@@ -9,9 +9,11 @@ public class DownWellPlataformerController : MonoBehaviour
     [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
     [SerializeField] private float m_MaxFallSpeed = 10f;                    // The fastest the player can travel when falling.
     [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
-    [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
+    [SerializeField] private float m_ReleaseJumpSpeed = 3f;                  // Amount of force added when the player jumps.
     [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+    [SerializeField] private WeaponShooter m_WeaponShooter;
+
 
     private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -51,27 +53,11 @@ public class DownWellPlataformerController : MonoBehaviour
     }
 
 
-    public void Move(float move, bool crouch, bool jump)
+    public void Move(float move, bool jump, bool jumpPressed)
     {
-        // If crouching, check to see if the character can stand up
-        if (!crouch && m_Anim.GetBool("Crouch"))
-        {
-            // If the character has a ceiling preventing them from standing up, keep them crouching
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-            {
-                crouch = true;
-            }
-        }
-
-        // Set whether or not the character is crouching in the animator
-        m_Anim.SetBool("Crouch", crouch);
-
         //only control the player if grounded or airControl is turned on
         if (m_Grounded || m_AirControl)
         {
-            // Reduce the speed if crouching by the crouchSpeed multiplier
-            move = (crouch ? move * m_CrouchSpeed : move);
-
             // The Speed animator parameter is set to the absolute value of the horizontal input.
             m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
@@ -107,7 +93,19 @@ public class DownWellPlataformerController : MonoBehaviour
             m_Anim.SetBool("Ground", false);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
+        else if (!m_Grounded && !jumpPressed && m_Rigidbody2D.velocity.y > m_ReleaseJumpSpeed)
+        {
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_ReleaseJumpSpeed);
+        }
+        else if (!m_Grounded && jump)
+        {
+            bool canShoot = m_WeaponShooter.ShootWeapon(m_GroundCheck.position);
 
+            if (canShoot)
+            {
+                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_ReleaseJumpSpeed);
+            }
+        }
 
     }
 
