@@ -94,8 +94,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -130,6 +130,8 @@ GameObject:
   m_Component:
   - component: {fileID: 91323231}
   - component: {fileID: 91323230}
+  - component: {fileID: 91323232}
+  - component: {fileID: 91323233}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -151,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 713918540}
   shakeController: {fileID: 897328481}
+  enemySpawner: {fileID: 91323233}
 --- !u!4 &91323231
 Transform:
   m_ObjectHideFlags: 0
@@ -165,6 +168,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &91323232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91323229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cadd29d7acaf71b4ca88fada06b3f46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &91323233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91323229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b151287e8246f314c8b6863dc5008814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_landEnemyPrefabs:
+  - {fileID: 8714907779571521221, guid: c6c7be27fac61ef439e7de7b4c283cc6, type: 3}
 --- !u!1 &622485250
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,10 +276,10 @@ RectTransform:
   m_Father: {fileID: 1897495429}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.72, y: 0.00750075}
-  m_AnchorMax: {x: 0.9866667, y: 0.15674962}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -10, y: 10}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &665463254
 MonoBehaviour:
@@ -261,7 +290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 665463252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -295,8 +324,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &665463255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +333,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 665463252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -315,8 +342,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: aa579b2739d883f46b11e218a9437689, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -326,6 +351,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &665463256
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -343,7 +369,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 665463252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
@@ -362,8 +388,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 3
     callback:
       m_PersistentCalls:
@@ -379,8 +403,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &713918538
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,10 +657,10 @@ RectTransform:
   m_Father: {fileID: 1897495429}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.25333333, y: 0.00750075}
-  m_AnchorMax: {x: 0.45333335, y: 0.120000005}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 190, y: 10}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1110382150
 MonoBehaviour:
@@ -649,7 +671,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1110382148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -683,8 +705,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1110382151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,7 +714,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1110382148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -703,8 +723,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 21776d444390d3e47be8ec53cb94eeb2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -714,6 +732,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1110382152
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -731,7 +750,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1110382148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
@@ -750,8 +769,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 3
     callback:
       m_PersistentCalls:
@@ -767,8 +784,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1408275076
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,11 +866,14 @@ MonoBehaviour:
   m_MaxFallSpeed: 100
   m_JumpForce: 750
   m_ReleaseJumpSpeed: 3
-  m_AirControl: 1
+  m_KillEnemyVerticalSpeed: 60
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 512
   m_WeaponShooter: {fileID: 1408275085}
+  m_whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!114 &1408275080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -949,6 +967,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1062,10 +1081,10 @@ RectTransform:
   m_Father: {fileID: 1897495429}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.013333334, y: 0.00750075}
-  m_AnchorMax: {x: 0.21333334, y: 0.120000005}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 10, y: 10}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1489021315
 MonoBehaviour:
@@ -1076,7 +1095,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1489021313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1110,8 +1129,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1489021316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1121,7 +1138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1489021313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1130,8 +1147,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 746a67855437d014d9fee8a168f65fee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -1141,6 +1156,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1489021317
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1158,7 +1174,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1489021313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
@@ -1177,8 +1193,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 3
     callback:
       m_PersistentCalls:
@@ -1194,8 +1208,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1897495425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,7 +1236,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1897495425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -1241,15 +1253,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1897495425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 750, y: 1334}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1324,7 +1336,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1963778949}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal
@@ -1343,7 +1355,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1963778949}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}

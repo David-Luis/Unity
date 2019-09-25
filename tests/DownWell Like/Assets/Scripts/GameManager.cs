@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         systems = GetComponent<Systems>();
+
     }
 
     // Update is called once per frame

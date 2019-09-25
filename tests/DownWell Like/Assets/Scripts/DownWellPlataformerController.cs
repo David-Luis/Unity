@@ -10,9 +10,9 @@ public class DownWellPlataformerController : MonoBehaviour
     [SerializeField] private float m_MaxFallSpeed = 10f;                    // The fastest the player can travel when falling.
     [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
     [SerializeField] private float m_ReleaseJumpSpeed = 3f;                  // Amount of force added when the player jumps.
-    [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
-    [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
-    [SerializeField] private WeaponShooter m_WeaponShooter;
+    [SerializeField] private float m_KillEnemyVerticalSpeed = 6f;                  // Amount of force added when the player jumps.
+    [SerializeField] private LayerMask m_WhatIsGround = 0;                  // A mask determining what is ground to the character
+    [SerializeField] private WeaponShooter m_WeaponShooter = null;
 
 
     private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
@@ -23,6 +23,10 @@ public class DownWellPlataformerController : MonoBehaviour
     private Animator m_Anim;            // Reference to the player's animator component.
     private Rigidbody2D m_Rigidbody2D;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+
+    const float k_killEnemyRadius = .2f; // Radius of the overlap circle to determine if grounded
+    [SerializeField] private LayerMask m_whatIsEnemy = 0;
+    private bool m_killedEnemy = false;
 
     private void Awake()
     {
@@ -36,6 +40,35 @@ public class DownWellPlataformerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckIfKilledEnemy();
+
+        if (!m_killedEnemy)
+        {
+            CheckIfGrounded();
+        }
+
+        // Set the vertical animation
+        m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+    }
+
+    private void CheckIfKilledEnemy()
+    {
+        m_killedEnemy = false;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_killEnemyRadius, m_whatIsEnemy);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+            {
+                m_killedEnemy = true;
+                Destroy(colliders[i].gameObject);
+                break;
+            }
+        }
+    }
+
+    private void CheckIfGrounded()
+    {
         m_Grounded = false;
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -44,49 +77,24 @@ public class DownWellPlataformerController : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
+            {
                 m_Grounded = true;
+                break;
+            }
         }
         m_Anim.SetBool("Ground", m_Grounded);
-
-        // Set the vertical animation
-        m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
     }
-
 
     public void Move(float move, bool jump, bool jumpPressed)
     {
-        //only control the player if grounded or airControl is turned on
-        if (m_Grounded || m_AirControl)
-        {
-            // The Speed animator parameter is set to the absolute value of the horizontal input.
-            m_Anim.SetFloat("Speed", Mathf.Abs(move));
-
-            // Move the character
-            m_Rigidbody2D.velocity = new Vector2(move * m_MaxSpeed, m_Rigidbody2D.velocity.y < -m_MaxFallSpeed ? -m_MaxFallSpeed : m_Rigidbody2D.velocity.y);
-
-            // If the input is moving the player right and the player is facing left...
-            if (move > 0 && !m_FacingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if (move < 0 && m_FacingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
-        }
-        else if (!m_Grounded)
-        {
-            if (m_Rigidbody2D.velocity.y < -m_MaxFallSpeed)
-            {
-                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, -m_MaxFallSpeed);
-            }
-        }
-
+        ControllHorizontalMove(move);
+        
         // If the player should jump...
-        if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+        if (m_killedEnemy)
+        {
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_KillEnemyVerticalSpeed);
+        }
+        else if (m_Grounded && jump && m_Anim.GetBool("Ground"))
         {
             // Add a vertical force to the player.
             m_Grounded = false;
@@ -109,6 +117,27 @@ public class DownWellPlataformerController : MonoBehaviour
 
     }
 
+    private void ControllHorizontalMove(float move)
+    {
+        // The Speed animator parameter is set to the absolute value of the horizontal input.
+        m_Anim.SetFloat("Speed", Mathf.Abs(move));
+
+        // Move the character
+        m_Rigidbody2D.velocity = new Vector2(move * m_MaxSpeed, m_Rigidbody2D.velocity.y < -m_MaxFallSpeed ? -m_MaxFallSpeed : m_Rigidbody2D.velocity.y);
+
+        // If the input is moving the player right and the player is facing left...
+        if (move > 0 && !m_FacingRight)
+        {
+            // ... flip the player.
+            Flip();
+        }
+        // Otherwise if the input is moving the player left and the player is facing right...
+        else if (move < 0 && m_FacingRight)
+        {
+            // ... flip the player.
+            Flip();
+        }
+    }
 
     private void Flip()
     {

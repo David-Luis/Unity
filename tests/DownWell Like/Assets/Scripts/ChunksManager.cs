@@ -8,19 +8,20 @@ public class ChunksManager : MonoBehaviour
     public Camera m_camera;
     public GameObject[] m_chunkPrefabs;
 
-    private int mAmountConcurrentChunks = 3;
-    private float mNextChunkY;
+    private int m_initialEmptyChunks = 2;
+    private int m_amountConcurrentChunks = 3;
+    private float m_nextChunkY;
     private List<GameObject> mChunks = new List<GameObject>();
 
     public void Start()
     {
-        mNextChunkY = 0;
+        m_nextChunkY = 0;
         CreateInitialChunks();
     }
 
     private void CreateInitialChunks()
     {
-        for (int i = 0; i < mAmountConcurrentChunks; i++)
+        for (int i = 0; i < m_initialEmptyChunks; i++)
         {
             AddChunk(CreateChunk(m_chunkPrefabs[0]));
         }
@@ -28,7 +29,7 @@ public class ChunksManager : MonoBehaviour
 
     private GameObject CreateChunk(GameObject prefab)
     {
-        return Instantiate(prefab, new Vector3(0, mNextChunkY, 0), Quaternion.identity);
+        return Instantiate(prefab, new Vector3(0, m_nextChunkY, 0), Quaternion.identity);
     }
 
     private GameObject CreateRandomChunk()
@@ -44,7 +45,7 @@ public class ChunksManager : MonoBehaviour
 
     private void CreateNewChunksIfNeeded()
     {
-        if (mChunks.Count < mAmountConcurrentChunks)
+        if (mChunks.Count < m_amountConcurrentChunks)
         {
             AddChunk(CreateRandomChunk());
         }
@@ -53,7 +54,7 @@ public class ChunksManager : MonoBehaviour
     private void AddChunk(GameObject chunk)
     {
         mChunks.Add(chunk);
-        mNextChunkY -= GetChunkSize(chunk);
+        m_nextChunkY -= GetChunkSize(chunk);
     }
 
     private void DeleteOutsideChunks()
