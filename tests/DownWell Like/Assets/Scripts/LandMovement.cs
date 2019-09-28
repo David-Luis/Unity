@@ -40,7 +40,6 @@ public class LandMovement : MonoBehaviour
             Flip();
         }
 
-        Debug.Log(m_direction);
         m_rigidbody2D.velocity = new Vector2(m_direction * m_speed, m_rigidbody2D.velocity.y);
     }
 

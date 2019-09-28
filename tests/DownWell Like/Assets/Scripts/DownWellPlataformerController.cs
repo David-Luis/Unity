@@ -10,13 +10,16 @@ public class DownWellPlataformerController : MonoBehaviour
     [SerializeField] private float m_MaxFallSpeed = 10f;                    // The fastest the player can travel when falling.
     [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
     [SerializeField] private float m_ReleaseJumpSpeed = 3f;                  // Amount of force added when the player jumps.
-    [SerializeField] private float m_KillEnemyVerticalSpeed = 6f;                  // Amount of force added when the player jumps.
+    [SerializeField] private float m_KillEnemyVerticalForce = 200f;                  // Amount of force added when the player jumps.
     [SerializeField] private LayerMask m_WhatIsGround = 0;                  // A mask determining what is ground to the character
     [SerializeField] private WeaponShooter m_WeaponShooter = null;
 
+    private const float MAX_TIME_JUMP_DELTA = 0.1f;
+    private float m_currentJumpDelta = 0;
+
 
     private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
-    const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .3f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
     private Transform m_CeilingCheck;   // A position marking where to check for ceilings
     const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
@@ -69,8 +72,7 @@ public class DownWellPlataformerController : MonoBehaviour
 
     private void CheckIfGrounded()
     {
-        m_Grounded = false;
-
+        bool isInGroundNow = false;
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -78,8 +80,18 @@ public class DownWellPlataformerController : MonoBehaviour
         {
             if (colliders[i].gameObject != gameObject)
             {
-                m_Grounded = true;
+                isInGroundNow = m_Grounded = true;
+                m_currentJumpDelta = MAX_TIME_JUMP_DELTA;
                 break;
+            }
+        }
+
+        if (m_Grounded && !isInGroundNow)
+        {
+            m_currentJumpDelta -= Time.deltaTime;
+            if (m_currentJumpDelta <= 0)
+            {
+                m_Grounded = false;
             }
         }
         m_Anim.SetBool("Ground", m_Grounded);
@@ -88,17 +100,19 @@ public class DownWellPlataformerController : MonoBehaviour
     public void Move(float move, bool jump, bool jumpPressed)
     {
         ControllHorizontalMove(move);
-        
+
         // If the player should jump...
         if (m_killedEnemy)
         {
-            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_KillEnemyVerticalSpeed);
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
+            m_Rigidbody2D.AddForce(new Vector2(0f, m_KillEnemyVerticalForce));
         }
         else if (m_Grounded && jump && m_Anim.GetBool("Ground"))
         {
             // Add a vertical force to the player.
             m_Grounded = false;
             m_Anim.SetBool("Ground", false);
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
         else if (!m_Grounded && !jumpPressed && m_Rigidbody2D.velocity.y > m_ReleaseJumpSpeed)
@@ -114,7 +128,6 @@ public class DownWellPlataformerController : MonoBehaviour
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_ReleaseJumpSpeed);
             }
         }
-
     }
 
     private void ControllHorizontalMove(float move)

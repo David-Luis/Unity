@@ -866,7 +866,7 @@ MonoBehaviour:
   m_MaxFallSpeed: 100
   m_JumpForce: 750
   m_ReleaseJumpSpeed: 3
-  m_KillEnemyVerticalSpeed: 60
+  m_KillEnemyVerticalForce: 750
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 512
