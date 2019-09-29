@@ -64,6 +64,7 @@ public class DownWellPlataformerController : MonoBehaviour
             if (colliders[i].gameObject != gameObject)
             {
                 m_killedEnemy = true;
+                Instantiate(GameManager.systems.m_particleEnemies, colliders[i].gameObject.transform.position, Quaternion.identity, colliders[i].gameObject.transform.parent.transform);
                 Destroy(colliders[i].gameObject);
                 break;
             }

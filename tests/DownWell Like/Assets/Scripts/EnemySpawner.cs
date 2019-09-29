@@ -4,16 +4,18 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject[] m_landEnemyPrefabs;
+    public GameObject[] m_airEnemyPrefabs;
 
     public void SpawnEnemies(ChunkController chunkController)
     {
-        SpawnEnemy(GetRandomLandPosition(chunkController.landSpawners), GetRandomLandEnemy());
+        SpawnEnemy(GetRandomPosition(chunkController.landSpawners), GetRandomLandEnemy());
+        SpawnEnemy(GetRandomPosition(chunkController.airSpawners), GetRandomAirEnemy());
     }
 
-    private Vector3 GetRandomLandPosition(List<BoxCollider2D> landSpawners)
+    private Vector3 GetRandomPosition(List<BoxCollider2D> spawners)
     {
-        BoxCollider2D randomLandSpawner = landSpawners[Random.Range(0, landSpawners.Count - 1)];
-        return new Vector3(randomLandSpawner.transform.position.x, randomLandSpawner.transform.position.y - randomLandSpawner.size.y * 0.5f, randomLandSpawner.transform.position.z);
+        BoxCollider2D randomSpawner = spawners[Random.Range(0, spawners.Count - 1)];
+        return new Vector3(randomSpawner.transform.position.x, randomSpawner.transform.position.y - randomSpawner.size.y * 0.5f, randomSpawner.transform.position.z);
     }
 
     private GameObject GetRandomLandEnemy()
@@ -21,8 +23,13 @@ public class EnemySpawner : MonoBehaviour
         return m_landEnemyPrefabs[0];
     }
 
+    private GameObject GetRandomAirEnemy()
+    {
+        return m_airEnemyPrefabs[0];
+    }
+
     private void SpawnEnemy(Vector3 position, GameObject enemyPrefab)
     {
-        Instantiate(enemyPrefab, position, Quaternion.identity);
+        Instantiate(enemyPrefab, position, Quaternion.identity, this.transform);
     }
 }

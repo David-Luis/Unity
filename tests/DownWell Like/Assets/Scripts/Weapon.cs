@@ -11,9 +11,6 @@ public class Weapon : MonoBehaviour
 
     private float m_originalY;
 
-    //TODO: move this to a more generic place?
-    public GameObject m_particleBoxes;
-
     bool destroyed = false;
 
     // Start is called before the first frame update
@@ -35,13 +32,28 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("breakable") && !destroyed)
+        if (!destroyed)
         {
-            destroyed = true;
-            Instantiate(m_particleBoxes, other.transform.position, Quaternion.identity, other.transform.parent.transform);
+            if (other.CompareTag("breakable"))
+            {
+                destroyed = true;
+                Instantiate(GameManager.systems.m_particleBoxes, other.transform.position, Quaternion.identity, other.transform.parent.transform);
 
-            Destroy(gameObject);
-            Destroy(other.gameObject);
+                Destroy(gameObject);
+                Destroy(other.gameObject);
+            }
+            else if (other.CompareTag("enemy"))
+            {
+                destroyed = true;
+                Instantiate(GameManager.systems.m_particleEnemies, other.transform.position, Quaternion.identity, other.transform.parent.transform);
+
+                Destroy(gameObject);
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

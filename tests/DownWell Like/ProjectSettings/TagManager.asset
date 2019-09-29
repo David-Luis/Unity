@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fire
   - breakable
+  - enemy
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Player
   - Spawners
   - Enemy
-  - 
-  - 
+  - GroundChecker
+  - Weapon
   - 
   - 
   - 

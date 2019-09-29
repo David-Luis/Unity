@@ -50,6 +50,8 @@ MonoBehaviour:
   speed: 20
   m_particleBoxes: {fileID: 3565694508253759636, guid: b8a224b287f0a0545b61583223a840e8,
     type: 3}
+  m_particleEnemies: {fileID: 3565694508253759636, guid: be13bf461bfed08439ca25c1e590c9a1,
+    type: 3}
 --- !u!50 &8198125422519829679
 Rigidbody2D:
   serializedVersion: 4
@@ -81,7 +83,7 @@ GameObject:
   m_Component:
   - component: {fileID: 292715596198945057}
   - component: {fileID: 292715596198945062}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +129,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -160,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 292715597411845509}
   - component: {fileID: 292715597411845530}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

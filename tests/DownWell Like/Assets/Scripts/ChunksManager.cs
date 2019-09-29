@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class ChunksManager : MonoBehaviour
 {
-    public Camera m_camera;
     public GameObject[] m_chunkPrefabs;
-
-    private int m_initialEmptyChunks = 2;
-    private int m_amountConcurrentChunks = 3;
+   
+    private int m_amountConcurrentChunks = 4;
     private float m_nextChunkY;
     private List<GameObject> mChunks = new List<GameObject>();
 
@@ -21,10 +19,8 @@ public class ChunksManager : MonoBehaviour
 
     private void CreateInitialChunks()
     {
-        for (int i = 0; i < m_initialEmptyChunks; i++)
-        {
-            AddChunk(CreateChunk(m_chunkPrefabs[0]));
-        }
+        AddChunk(CreateChunk(m_chunkPrefabs[0]));
+        AddChunk(CreateChunk(m_chunkPrefabs[3]));
     }
 
     private GameObject CreateChunk(GameObject prefab)
@@ -62,8 +58,10 @@ public class ChunksManager : MonoBehaviour
         for (int i = mChunks.Count - 1; i >= 0; --i)
         {
             GameObject chunk = mChunks[i];
-            float distanceToCamera = chunk.transform.position.y - m_camera.transform.position.y;
-            if (distanceToCamera > GetChunkSize(chunk))
+            float distanceToCamera = chunk.transform.position.y - GameManager.systems.mainCamera.transform.position.y;
+
+            //I did this to be sure, makes sense? without * 2 will be optimized
+            if (distanceToCamera > GetChunkSize(chunk) * 2)
             {
                 Destroy(chunk);
                 mChunks.RemoveAt(i);
