@@ -17,7 +17,6 @@ public class DownWellPlataformerController : MonoBehaviour
     private const float MAX_TIME_JUMP_DELTA = 0.1f;
     private float m_currentJumpDelta = 0;
 
-
     private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
     const float k_GroundedRadius = .3f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -30,6 +29,8 @@ public class DownWellPlataformerController : MonoBehaviour
     const float k_killEnemyRadius = .2f; // Radius of the overlap circle to determine if grounded
     [SerializeField] private LayerMask m_whatIsEnemy = 0;
     private bool m_killedEnemy = false;
+    private GameObject m_enemyKilled = null;
+    private BoxCollider2D m_boxCollider;
 
     private void Awake()
     {
@@ -38,12 +39,19 @@ public class DownWellPlataformerController : MonoBehaviour
         m_CeilingCheck = transform.Find("CeilingCheck");
         m_Anim = GetComponent<Animator>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+        m_boxCollider = transform.Find("BodyCollider").GetComponent<BoxCollider2D>();
     }
 
 
     private void FixedUpdate()
     {
-        CheckIfKilledEnemy();
+        if (!m_Grounded)
+        {
+            CheckIfKilledEnemy();
+        }
+
+        CheckIfHitByEnemy();
 
         if (!m_killedEnemy)
         {
@@ -63,10 +71,23 @@ public class DownWellPlataformerController : MonoBehaviour
         {
             if (colliders[i].gameObject != gameObject)
             {
+                m_enemyKilled = gameObject;
                 m_killedEnemy = true;
                 Instantiate(GameManager.systems.m_particleEnemies, colliders[i].gameObject.transform.position, Quaternion.identity, colliders[i].gameObject.transform.parent.transform);
                 Destroy(colliders[i].gameObject);
                 break;
+            }
+        }
+    }
+
+    private void CheckIfHitByEnemy()
+    {
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(m_boxCollider.bounds.min, m_boxCollider.bounds.max, m_whatIsEnemy);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+            {
+                Debug.Log("HIT BY ENEMY");
             }
         }
     }

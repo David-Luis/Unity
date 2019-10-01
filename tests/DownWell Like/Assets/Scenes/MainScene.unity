@@ -201,6 +201,63 @@ MonoBehaviour:
   - {fileID: 8714907779571521221, guid: c6c7be27fac61ef439e7de7b4c283cc6, type: 3}
   m_airEnemyPrefabs:
   - {fileID: 8714907779571521221, guid: 824627fa7b305a8439543953d7b183c1, type: 3}
+--- !u!1 &530438021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 530438022}
+  - component: {fileID: 530438023}
+  m_Layer: 10
+  m_Name: BodyCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &530438022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530438021}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1408275077}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &530438023
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530438021}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.375, y: 1.375}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.25, y: 0.68}
+  m_EdgeRadius: 0
 --- !u!1 &622485250
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,10 +860,10 @@ GameObject:
   - component: {fileID: 1408275084}
   - component: {fileID: 1408275083}
   - component: {fileID: 1408275081}
-  - component: {fileID: 1408275078}
   - component: {fileID: 1408275080}
   - component: {fileID: 1408275079}
   - component: {fileID: 1408275085}
+  - component: {fileID: 1408275082}
   m_Layer: 10
   m_Name: 2DCharacter
   m_TagString: Player
@@ -828,35 +885,10 @@ Transform:
   - {fileID: 874074109}
   - {fileID: 906648114}
   - {fileID: 2004727645}
+  - {fileID: 530438022}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1408275078
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1408275076}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.375, y: 1.375}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.68}
-  m_EdgeRadius: 0
 --- !u!114 &1408275079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,6 +946,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1408275082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408275076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e9aebfa82f12741981931065e98664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 1
 --- !u!95 &1408275083
 Animator:
   serializedVersion: 3
@@ -994,7 +1039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8a58abbe4fa0943bb4e0f1a757f52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weapon: {fileID: 292715595711682950, guid: 4335653b32044b347a79845c82c01fe7, type: 3}
+  m_Weapon: {fileID: 292715595711682950, guid: f925cf37df3e57c41b95032302404c94, type: 3}
 --- !u!1 &1415556335
 GameObject:
   m_ObjectHideFlags: 0
