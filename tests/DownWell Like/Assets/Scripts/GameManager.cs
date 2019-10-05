@@ -1,4 +1,5 @@
-﻿using Doozy.Engine;
+﻿using DG.Tweening;
+using Doozy.Engine;
 using UnityEngine;
 
 [RequireComponent(typeof(Systems))]
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         systems = GetComponent<Systems>();
-
+        DOTween.Init();
     }
 
     private void OnEnable()
@@ -36,10 +37,13 @@ public class GameManager : MonoBehaviour
         }
         else if (message.EventName == "PauseGame")
         {
+            systems.timeManager.PauseGame();
         }
         else if (message.EventName == "ResumeGame")
         {
+            systems.timeManager.ResumeGame();
         }
-        Debug.Log("UI EVENT: '" + message.EventName);
+
+        //Debug.Log("UI EVENT: '" + message.EventName);
     }
 }

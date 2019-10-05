@@ -6,11 +6,18 @@ public class WeaponShooter : MonoBehaviour
 {
     public GameObject m_Weapon;
 
-    public bool ShootWeapon(Vector3 position)
-    {
-        GameManager.systems.shakeController.ShakeShoot();
-        Instantiate(m_Weapon, position, Quaternion.identity);
+    private float m_lastShootTime = 0;
 
-        return true;
+    public bool TryShootWeapon(Vector3 position)
+    {
+        Weapon weapon = Instantiate(m_Weapon, position, Quaternion.identity).GetComponent<Weapon>();
+        if (weapon.TryShoot(m_lastShootTime))
+        {
+            m_lastShootTime = Time.realtimeSinceStartup;
+            GameManager.systems.shakeController.ShakeShoot();
+            return true;
+        }
+
+        return false;
     }
 }

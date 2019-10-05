@@ -13,6 +13,12 @@ public class ShakeController : MonoBehaviour
         m_shakeDuration = 0.25f;
     }
 
+    public void ShakeHit()
+    {
+        m_shakeMagnitude = 0.1f;
+        m_shakeDuration = 0.3f;
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -7,6 +7,8 @@ public class Systems : MonoBehaviour
     public EnemySpawner enemySpawner;
     public Transform player;
     public ChunksManager chunksManager;
+    public TimeManager timeManager;
+    public HitOverlayController hitOverlayController;
 
     public GameObject m_particleBoxes;
     public GameObject m_particleEnemies;

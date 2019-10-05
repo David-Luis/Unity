@@ -525,7 +525,7 @@ MonoBehaviour:
   m_name: Pause Game Events
   m_notes: 
   ErrorNotSendingAnyGameEvent: 0
-  GameEvent: ResumeGame
+  GameEvent: PauseGame
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
