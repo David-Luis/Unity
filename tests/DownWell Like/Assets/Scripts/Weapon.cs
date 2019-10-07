@@ -6,15 +6,18 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public float m_shootCadence = 1.0f;
+    public bool m_isAutomatic = false;
+    public int m_baseAmmo = 10;
 
-    public bool TryShoot(float lastShootTime)
+    public bool TryShoot(float lastShootTime, int currentAmmo)
     {
-        if (Time.realtimeSinceStartup >= (lastShootTime + m_shootCadence))
+        if (currentAmmo > 0 && Time.realtimeSinceStartup >= (lastShootTime + m_shootCadence))
         {
             Shoot();
             return true;
         }
 
+        Destroy(gameObject);
         return false;
     }
 

@@ -146,6 +146,7 @@ public class DownWellPlataformerController : MonoBehaviour
                 m_inAirBecauseKilledOrHitEnemy = false;
                 isInGroundNow = m_Grounded = true;
                 m_currentJumpDelta = MAX_TIME_JUMP_DELTA;
+                m_WeaponShooter.Reload();
                 break;
             }
         }
@@ -169,8 +170,11 @@ public class DownWellPlataformerController : MonoBehaviour
         {
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_KillEnemyVerticalForce));
+
+            return;
         }
-        else if (m_hitByEnemy)
+
+        if (m_hitByEnemy)
         {
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             if (m_enemyHit.transform.position.x >= transform.position.x)
@@ -181,25 +185,37 @@ public class DownWellPlataformerController : MonoBehaviour
             {
                 m_Rigidbody2D.AddForce(new Vector2(m_HitByEnemyForceX, m_HitByEnemyForceY));
             }
+
+            return;
         }
-        else if (m_Grounded && jump && m_Anim.GetBool("Ground"))    // jump
+
+        if (m_Grounded && jump && m_Anim.GetBool("Ground"))    // jump
         {
             m_Grounded = false;
             m_Anim.SetBool("Ground", false);
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+
+            return;
         }
-        else if (!m_Grounded && !jumpPressed && !m_inAirBecauseKilledOrHitEnemy && m_Rigidbody2D.velocity.y > m_ReleaseJumpSpeed) //stop going up if player release jump button
+
+        if (!m_Grounded && !jumpPressed && !m_inAirBecauseKilledOrHitEnemy && m_Rigidbody2D.velocity.y > m_ReleaseJumpSpeed) //stop going up if player release jump button
         {
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_ReleaseJumpSpeed);
+
+            return;
         }
-        else if (!m_Grounded && jump)   // try to shot weapon
+
+        bool shouldShoot = jump || (m_WeaponShooter.IsAutomatic() && jumpPressed);
+        if (!m_Grounded && shouldShoot)   // try to shot weapon
         {
             bool canShoot = m_WeaponShooter.TryShootWeapon(m_GroundCheck.position);
             if (canShoot)
             {
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_ReleaseJumpSpeed);
             }
+
+            return;
         }
     }
 

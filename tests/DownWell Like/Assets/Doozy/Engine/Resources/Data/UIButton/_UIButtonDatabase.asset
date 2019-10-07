@@ -17,6 +17,8 @@ MonoBehaviour:
   - Custom
   - Game
   - General
+  - Debug
   Categories:
   - {fileID: 11400000, guid: 480e31c1c09815748838ca45f022fe76, type: 2}
   - {fileID: 11400000, guid: a43a543887b2b2b4d97cdd4a458f2546, type: 2}
+  - {fileID: 11400000, guid: b4a3caf4799abb441b0b3bb952d00789, type: 2}

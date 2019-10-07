@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_shootCadence: 0.1
+  m_isAutomatic: 0
+  m_baseAmmo: 4
 --- !u!1 &292715596198945056
 GameObject:
   m_ObjectHideFlags: 0

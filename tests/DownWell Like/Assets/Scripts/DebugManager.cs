@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Doozy.Engine;
 
 public class DebugManager : MonoBehaviour
 {
@@ -22,6 +21,14 @@ public class DebugManager : MonoBehaviour
             else
             {
                 Time.timeScale = 1;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (GameManager.systems.graphController.Graph.ActiveNode.Name == "HUD")
+            {
+                Debug.Log("Sending: OpenCheats");
+                GameEventMessage.Send("OpenCheats");
             }
         }
     }
