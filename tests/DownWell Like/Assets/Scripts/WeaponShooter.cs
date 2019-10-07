@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WeaponShooter : MonoBehaviour
 {
-    enum WeaponType
+    public enum WeaponType
     {
         Normal = 0,
         Shootgun,
@@ -22,7 +22,7 @@ public class WeaponShooter : MonoBehaviour
 
     private void Awake()
     {
-        SetWeapon((int)WeaponType.MachineGun);
+        SetWeapon(WeaponType.Normal);
     }
 
     public bool TryShootWeapon(Vector3 position)
@@ -41,11 +41,11 @@ public class WeaponShooter : MonoBehaviour
         return false;
     }
 
-    public void SetWeapon(int idx)
+    public void SetWeapon(WeaponType weaponType)
     {
+        m_currentWeapon = (int)weaponType;
         CalculateAndSetMaxAmmo();
         Reload();
-        m_currentWeapon = idx;
     }
 
     private void UpdateText()

@@ -11,6 +11,7 @@ public class Systems : MonoBehaviour
     public TimeManager timeManager;
     public HitOverlayController hitOverlayController;
     public GraphController graphController;
+    public WeaponShooter weaponShooter;
 
     public GameObject m_particleBoxes;
     public GameObject m_particleEnemies;

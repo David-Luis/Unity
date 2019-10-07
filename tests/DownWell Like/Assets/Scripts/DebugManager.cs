@@ -3,10 +3,32 @@ using Doozy.Engine;
 
 public class DebugManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        //Start listening for game events
+        Message.AddListener<GameEventMessage>(OnMessage);
+    }
+
+    private void OnDisable()
+    {
+        //Stop listening for game events
+        Message.RemoveListener<GameEventMessage>(OnMessage);
+    }
+
+    private void OnMessage(GameEventMessage message)
+    {
+        if (message.EventName == "DebugSetWeaponNormal")
+        {
+            GameManager.systems.weaponShooter.SetWeapon(WeaponShooter.WeaponType.Normal);
+        }
+        else if (message.EventName == "DebugSetWeaponShootgun")
+        {
+            GameManager.systems.weaponShooter.SetWeapon(WeaponShooter.WeaponType.Shootgun);
+        }
+        else if (message.EventName == "DebugSetWeaponMachineGun")
+        {
+            GameManager.systems.weaponShooter.SetWeapon(WeaponShooter.WeaponType.MachineGun);
+        }
     }
 
     // Update is called once per frame
@@ -27,8 +49,7 @@ public class DebugManager : MonoBehaviour
         {
             if (GameManager.systems.graphController.Graph.ActiveNode.Name == "HUD")
             {
-                Debug.Log("Sending: OpenCheats");
-                GameEventMessage.Send("OpenCheats");
+                GameEventMessage.SendEvent("OpenCheats");
             }
         }
     }

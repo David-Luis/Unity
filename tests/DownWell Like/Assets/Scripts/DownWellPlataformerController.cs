@@ -12,7 +12,7 @@ public class DownWellPlataformerController : MonoBehaviour
     [SerializeField] private float m_ReleaseJumpSpeed = 3f;                  // Amount of force added when the player jumps.
     [SerializeField] private float m_KillEnemyVerticalForce = 200f;                  // Amount of force added when the player jumps.
     [SerializeField] private LayerMask m_WhatIsGround = 0;                  // A mask determining what is ground to the character
-    [SerializeField] private WeaponShooter m_WeaponShooter = null;
+    private WeaponShooter m_WeaponShooter = null;
 
     private const float MAX_TIME_JUMP_DELTA = 0.1f;
     private float m_currentJumpDelta = 0;
@@ -58,6 +58,7 @@ public class DownWellPlataformerController : MonoBehaviour
         m_boxCollider = transform.Find("BodyCollider").GetComponent<BoxCollider2D>();
 
         healthController = GetComponent<HealthController>();
+        m_WeaponShooter = GetComponent<WeaponShooter>();
     }
 
 
