@@ -45,7 +45,8 @@ public class DebugManager : MonoBehaviour
                 Time.timeScale = 1;
             }
         }
-        if (Input.GetKeyDown(KeyCode.C))
+
+        if (Input.GetKeyDown(KeyCode.C) || Input.touchCount == 4)
         {
             if (GameManager.systems.graphController.Graph.ActiveNode.Name == "HUD")
             {
