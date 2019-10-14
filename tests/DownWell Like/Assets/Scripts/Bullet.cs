@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
 
     private float m_originalY;
 
+    public Weapon m_weapon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +44,14 @@ public class Bullet : MonoBehaviour
             }
             else if (other.CompareTag("enemy"))
             {
-                Instantiate(GameManager.systems.m_particleEnemies, other.transform.position, Quaternion.identity, other.transform.parent.transform);
-
                 Destroy(gameObject);
-                Destroy(other.gameObject);
+
+                EnemyController enemyController = other.GetComponent<EnemyController>();
+                bool isDead = enemyController.Hit(m_weapon.m_damage);
+                if (isDead)
+                {
+                    Instantiate(GameManager.systems.m_particleEnemies, other.transform.position, Quaternion.identity, other.transform.parent.transform);
+                }
             }
             else 
             {

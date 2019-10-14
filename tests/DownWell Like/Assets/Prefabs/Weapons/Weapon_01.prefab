@@ -47,6 +47,7 @@ MonoBehaviour:
   m_shootCadence: 0.05
   m_isAutomatic: 0
   m_baseAmmo: 6
+  m_damage: 50
 --- !u!1 &292715596198945056
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +224,7 @@ MonoBehaviour:
   range: 10
   speed: 20
   angle: 0
+  m_weapon: {fileID: 0}
 --- !u!50 &6427085645331287399
 Rigidbody2D:
   serializedVersion: 4

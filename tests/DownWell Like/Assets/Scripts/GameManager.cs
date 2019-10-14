@@ -44,6 +44,6 @@ public class GameManager : MonoBehaviour
             systems.timeManager.ResumeGame();
         }
 
-        //Debug.Log("UI EVENT: '" + message.EventName);
+        //Logger.Log("UI EVENT: '" + message.EventName);
     }
 }

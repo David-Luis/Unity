@@ -64,12 +64,28 @@ public class DownWellPlataformerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        m_killedEnemy = false;
+         m_hitByEnemy = false;
+        m_enemyHit = null;
+
+        if (m_isInvincible)
+        {
+            m_currentInvencibleTime -= Time.deltaTime;
+            if (m_currentInvencibleTime <= 0)
+            {
+                m_isInvincible = false;
+            }
+        }
+
         if (!m_Grounded)
         {
             CheckIfKilledEnemy();
         }
 
-        CheckIfHitByEnemy();
+        if (!m_killedEnemy && !m_hitByEnemy)
+        {
+            CheckIfHitByEnemy();
+        }
 
         if (!m_killedEnemy && !m_hitByEnemy)
         {
@@ -82,55 +98,57 @@ public class DownWellPlataformerController : MonoBehaviour
 
     private void CheckIfKilledEnemy()
     {
-        m_killedEnemy = false;
-
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_killEnemyRadius, m_whatIsEnemy);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
             {
-                m_enemyKilled = gameObject;
-                m_killedEnemy = true;
-                m_inAirBecauseKilledOrHitEnemy = true;
-                Instantiate(GameManager.systems.m_particleEnemies, colliders[i].gameObject.transform.position, Quaternion.identity, colliders[i].gameObject.transform.parent.transform);
-                Destroy(colliders[i].gameObject);
-                break;
+                EnemyController enemyController = colliders[i].gameObject.GetComponent<EnemyController>();
+                if (enemyController.canBeSmashed)
+                {
+                    m_enemyKilled = gameObject;
+                    m_killedEnemy = true;
+                    m_inAirBecauseKilledOrHitEnemy = true;
+                    Instantiate(GameManager.systems.m_particleEnemies, colliders[i].gameObject.transform.position, Quaternion.identity, colliders[i].gameObject.transform.parent.transform);
+                    Destroy(colliders[i].gameObject);
+                    break;
+                }
+                else
+                {
+                    HitByEnemy(colliders[i].gameObject);
+                }
             }
         }
     }
 
     private void CheckIfHitByEnemy()
     {
-        m_hitByEnemy = false;
-        m_enemyHit = null;
-        if (m_isInvincible)
-        {
-            m_currentInvencibleTime -= Time.deltaTime;
-            if (m_currentInvencibleTime<=0)
-            {
-                m_isInvincible = false;
-            }
-            return;
-        }
-
         Collider2D[] colliders = Physics2D.OverlapAreaAll(m_boxCollider.bounds.min, m_boxCollider.bounds.max, m_whatIsEnemy);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
             {
-                m_enemyHit = colliders[i].gameObject;
-                m_hitByEnemy = true;
-                m_isInvincible = true;
-                m_inAirBecauseKilledOrHitEnemy = true;
-                m_isThrownByEnemy = true;
-                m_currentHitByEnemyThrowTime = m_HitByEnemyThrowTime;
-                m_currentInvencibleTime = m_invencibleTime;
-                healthController.RemoveLife(1);
-
-                GameManager.systems.timeManager.SlowHitByEnemy();
-                GameManager.systems.shakeController.ShakeHit();
-                GameManager.systems.hitOverlayController.HitByEnemy();
+                HitByEnemy(colliders[i].gameObject);
             }
+        }
+    }
+
+    private void HitByEnemy(GameObject gameObject)
+    {
+        if (!m_isInvincible)
+        {
+            m_enemyHit = gameObject;
+            m_hitByEnemy = true;
+            m_isInvincible = true;
+            m_inAirBecauseKilledOrHitEnemy = true;
+            m_isThrownByEnemy = true;
+            m_currentHitByEnemyThrowTime = m_HitByEnemyThrowTime;
+            m_currentInvencibleTime = m_invencibleTime;
+            healthController.RemoveLife(1);
+
+            GameManager.systems.timeManager.SlowHitByEnemy();
+            GameManager.systems.shakeController.ShakeHit();
+            GameManager.systems.hitOverlayController.HitByEnemy();
         }
     }
 

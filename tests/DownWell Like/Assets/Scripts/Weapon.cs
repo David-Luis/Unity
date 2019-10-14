@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     public float m_shootCadence = 1.0f;
     public bool m_isAutomatic = false;
     public int m_baseAmmo = 10;
+    public int m_damage = 1;
 
     public bool TryShoot(float lastShootTime, int currentAmmo)
     {
@@ -26,6 +27,7 @@ public class Weapon : MonoBehaviour
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(true);
+            child.GetComponent<Bullet>().m_weapon = this;
         }
     }
 

@@ -22,7 +22,7 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    public int GetLifes()
+    public int GetLife()
     {
         return m_life;
     }

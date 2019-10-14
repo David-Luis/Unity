@@ -519,6 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_landEnemyPrefabs:
   - {fileID: 8714907779571521221, guid: c6c7be27fac61ef439e7de7b4c283cc6, type: 3}
+  - {fileID: 8714907779571521221, guid: 39288548abc76de46acfd307ffa16b27, type: 3}
   m_airEnemyPrefabs:
   - {fileID: 8714907779571521221, guid: 824627fa7b305a8439543953d7b183c1, type: 3}
 --- !u!114 &91323234
@@ -774,8 +775,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 190, y: 10}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 230, y: 10}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &208280825
 MonoBehaviour:
@@ -6908,11 +6909,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5784f3b91803f6745bc820352ce3ce84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_chunkPrefabs:
+  m_initialChunkPrefabs:
   - {fileID: 4335422001348912179, guid: bae4fe5565289f64cab8e6cfae7c0d4f, type: 3}
+  - {fileID: 4335422001348912179, guid: ea47deeadb9f2dd41bda58f8db9d8fb9, type: 3}
+  m_chunkPrefabs:
   - {fileID: 4335422001348912179, guid: 51f936b9ece452249a6a864872edaaed, type: 3}
   - {fileID: 4335422001348912179, guid: 232aa03008145a94a8506a40119b989a, type: 3}
-  - {fileID: 4335422001348912179, guid: ea47deeadb9f2dd41bda58f8db9d8fb9, type: 3}
 --- !u!4 &622485252
 Transform:
   m_ObjectHideFlags: 0
@@ -7043,6 +7045,7 @@ MonoBehaviour:
   ySmooth: 4
   minY: -5
   maxY: 6
+  targetDelta: -5
   target: {fileID: 1408275076}
 --- !u!1 &744857226
 GameObject:
@@ -15903,7 +15906,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 10, y: 10}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1040918066
 MonoBehaviour:
@@ -23448,7 +23451,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -10, y: -10}
-  m_SizeDelta: {x: 120, y: 120}
+  m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1596928263
 MonoBehaviour:
@@ -34721,7 +34724,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -10, y: 10}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &2038127447
 MonoBehaviour:

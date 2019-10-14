@@ -10,19 +10,25 @@ public class CameraFollowVertical : MonoBehaviour
     public float ySmooth = 8f; // How smoothly the camera catches up with it's target movement in the y axis.
     public float minY = -5; // The minimum x and y coordinates the camera can have.
     public float maxY = 5; // The maximum x and y coordinates the camera can have.
+    public float targetDelta = 0;
 
     public GameObject target; // Reference to the player's transform.
+
+    private float GetTargetY()
+    {
+        return target.transform.position.y + targetDelta;
+    }
 
     private bool CheckYMargin()
     {
         // Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
-        return Mathf.Abs(transform.position.y - target.transform.position.y) > yMargin;
+        return Mathf.Abs(transform.position.y - GetTargetY()) > yMargin;
     }
 
     private bool CheckYLimit(float targetY)
     {
         // Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
-        return (target.transform.position.y + targetY) >= maxY || (target.transform.position.y + targetY) <= minY;
+        return (GetTargetY() + targetY) >= maxY || (GetTargetY() + targetY) <= minY;
     }
 
     private void Update()
@@ -37,12 +43,12 @@ public class CameraFollowVertical : MonoBehaviour
         if (CheckYMargin())
         {
             // ... the target y coordinate should be a Lerp between the camera's current y position and the player's current y position.
-            targetY = Mathf.Lerp(transform.position.y, target.transform.position.y, ySmooth * Time.deltaTime);
+            targetY = Mathf.Lerp(transform.position.y, GetTargetY(), ySmooth * Time.deltaTime);
         }
 
         if (CheckYLimit(targetY))
         {
-            targetY = Mathf.Clamp(targetY, target.transform.position.y + minY, target.transform.position.y + maxY);
+            targetY = Mathf.Clamp(targetY, GetTargetY() + minY, target.transform.position.y + maxY);
         }
 
         // Set the camera's position to the target position with the same z component.
