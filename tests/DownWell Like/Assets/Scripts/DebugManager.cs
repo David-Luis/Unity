@@ -59,7 +59,7 @@ public class DebugManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.C) || Input.touchCount == 4)
             {
-                if (GameManager.systems.graphController.Graph.ActiveNode.Name == "HUD")
+                if (GameManager.systems.graphController && GameManager.systems.graphController.Graph.ActiveNode.Name == "HUD")
                 {
                     GameEventMessage.SendEvent("OpenCheats");
                 }
