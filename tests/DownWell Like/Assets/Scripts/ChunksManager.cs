@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ChunksManager : MonoBehaviour
 {
+    public GameObject[] m_initialChunkPrefabs;
     public GameObject[] m_chunkPrefabs;
    
     private int m_amountConcurrentChunks = 4;
     private float m_nextChunkY;
     private List<GameObject> mChunks = new List<GameObject>();
+
+    private static uint ID = 0;
 
     public void Start()
     {
@@ -19,18 +20,22 @@ public class ChunksManager : MonoBehaviour
 
     private void CreateInitialChunks()
     {
-        AddChunk(CreateChunk(m_chunkPrefabs[0]));
-        AddChunk(CreateChunk(m_chunkPrefabs[3]));
+        foreach (GameObject chunk in m_initialChunkPrefabs)
+        {
+            AddChunk(CreateChunk(chunk));
+        }
     }
 
     private GameObject CreateChunk(GameObject prefab)
     {
-        return Instantiate(prefab, new Vector3(0, m_nextChunkY, 0), Quaternion.identity);
+        GameObject chunk = Instantiate(prefab, new Vector3(0, m_nextChunkY, 0), Quaternion.identity);
+        chunk.name += "_" + (ID++);
+        return chunk;
     }
 
     private GameObject CreateRandomChunk()
     {
-        return CreateChunk(m_chunkPrefabs[2]);
+        return CreateChunk(m_chunkPrefabs[Random.Range(0, m_chunkPrefabs.Length)]);
     }
 
     public void Update()

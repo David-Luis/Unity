@@ -12,11 +12,10 @@ public class DownWellPlataformerController : MonoBehaviour
     [SerializeField] private float m_ReleaseJumpSpeed = 3f;                  // Amount of force added when the player jumps.
     [SerializeField] private float m_KillEnemyVerticalForce = 200f;                  // Amount of force added when the player jumps.
     [SerializeField] private LayerMask m_WhatIsGround = 0;                  // A mask determining what is ground to the character
-    [SerializeField] private WeaponShooter m_WeaponShooter = null;
+    private WeaponShooter m_WeaponShooter = null;
 
     private const float MAX_TIME_JUMP_DELTA = 0.1f;
     private float m_currentJumpDelta = 0;
-
 
     private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
     const float k_GroundedRadius = .3f; // Radius of the overlap circle to determine if grounded
@@ -30,6 +29,23 @@ public class DownWellPlataformerController : MonoBehaviour
     const float k_killEnemyRadius = .2f; // Radius of the overlap circle to determine if grounded
     [SerializeField] private LayerMask m_whatIsEnemy = 0;
     private bool m_killedEnemy = false;
+    private bool m_inAirBecauseKilledOrHitEnemy = false;
+    private GameObject m_enemyKilled = null;
+    private BoxCollider2D m_boxCollider;
+
+    public float m_HitByEnemyForceX = 400f;
+    public float m_HitByEnemyForceY = 100f;
+    private HealthController healthController;
+    private bool m_hitByEnemy = false;
+    private GameObject m_enemyHit = null;
+
+    public float m_HitByEnemyThrowTime = 0.5f;
+    private bool m_isThrownByEnemy = false;
+    private float m_currentHitByEnemyThrowTime = 0.0f;
+
+    public float m_invencibleTime = 1.5f;
+    private float m_currentInvencibleTime = 0.0f;
+    private bool m_isInvincible = false;
 
     private void Awake()
     {
@@ -38,14 +54,40 @@ public class DownWellPlataformerController : MonoBehaviour
         m_CeilingCheck = transform.Find("CeilingCheck");
         m_Anim = GetComponent<Animator>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+        m_boxCollider = transform.Find("BodyCollider").GetComponent<BoxCollider2D>();
+
+        healthController = GetComponent<HealthController>();
+        m_WeaponShooter = GetComponent<WeaponShooter>();
     }
 
 
     private void FixedUpdate()
     {
-        CheckIfKilledEnemy();
+        m_killedEnemy = false;
+         m_hitByEnemy = false;
+        m_enemyHit = null;
 
-        if (!m_killedEnemy)
+        if (m_isInvincible)
+        {
+            m_currentInvencibleTime -= Time.deltaTime;
+            if (m_currentInvencibleTime <= 0)
+            {
+                m_isInvincible = false;
+            }
+        }
+
+        if (!m_Grounded)
+        {
+            CheckIfKilledEnemy();
+        }
+
+        if (!m_killedEnemy && !m_hitByEnemy)
+        {
+            CheckIfHitByEnemy();
+        }
+
+        if (!m_killedEnemy && !m_hitByEnemy)
         {
             CheckIfGrounded();
         }
@@ -56,18 +98,57 @@ public class DownWellPlataformerController : MonoBehaviour
 
     private void CheckIfKilledEnemy()
     {
-        m_killedEnemy = false;
-
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_killEnemyRadius, m_whatIsEnemy);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
             {
-                m_killedEnemy = true;
-                Instantiate(GameManager.systems.m_particleEnemies, colliders[i].gameObject.transform.position, Quaternion.identity, colliders[i].gameObject.transform.parent.transform);
-                Destroy(colliders[i].gameObject);
-                break;
+                EnemyController enemyController = colliders[i].gameObject.GetComponent<EnemyController>();
+                if (enemyController.canBeSmashed)
+                {
+                    m_enemyKilled = gameObject;
+                    m_killedEnemy = true;
+                    m_inAirBecauseKilledOrHitEnemy = true;
+                    Instantiate(GameManager.systems.m_particleEnemies, colliders[i].gameObject.transform.position, Quaternion.identity, colliders[i].gameObject.transform.parent.transform);
+                    Destroy(colliders[i].gameObject);
+                    break;
+                }
+                else
+                {
+                    HitByEnemy(colliders[i].gameObject);
+                }
             }
+        }
+    }
+
+    private void CheckIfHitByEnemy()
+    {
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(m_boxCollider.bounds.min, m_boxCollider.bounds.max, m_whatIsEnemy);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+            {
+                HitByEnemy(colliders[i].gameObject);
+            }
+        }
+    }
+
+    private void HitByEnemy(GameObject gameObject)
+    {
+        if (!m_isInvincible)
+        {
+            m_enemyHit = gameObject;
+            m_hitByEnemy = true;
+            m_isInvincible = true;
+            m_inAirBecauseKilledOrHitEnemy = true;
+            m_isThrownByEnemy = true;
+            m_currentHitByEnemyThrowTime = m_HitByEnemyThrowTime;
+            m_currentInvencibleTime = m_invencibleTime;
+            healthController.RemoveLife(1);
+
+            GameManager.systems.timeManager.SlowHitByEnemy();
+            GameManager.systems.shakeController.ShakeHit();
+            GameManager.systems.hitOverlayController.HitByEnemy();
         }
     }
 
@@ -81,8 +162,10 @@ public class DownWellPlataformerController : MonoBehaviour
         {
             if (colliders[i].gameObject != gameObject)
             {
+                m_inAirBecauseKilledOrHitEnemy = false;
                 isInGroundNow = m_Grounded = true;
                 m_currentJumpDelta = MAX_TIME_JUMP_DELTA;
+                m_WeaponShooter.Reload();
                 break;
             }
         }
@@ -102,32 +185,56 @@ public class DownWellPlataformerController : MonoBehaviour
     {
         ControllHorizontalMove(move);
 
-        // If the player should jump...
         if (m_killedEnemy)
         {
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_KillEnemyVerticalForce));
+
+            return;
         }
-        else if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+
+        if (m_hitByEnemy)
         {
-            // Add a vertical force to the player.
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
+            if (m_enemyHit.transform.position.x >= transform.position.x)
+            {
+                m_Rigidbody2D.AddForce(new Vector2(-m_HitByEnemyForceX, m_HitByEnemyForceY));
+            }
+            else
+            {
+                m_Rigidbody2D.AddForce(new Vector2(m_HitByEnemyForceX, m_HitByEnemyForceY));
+            }
+
+            return;
+        }
+
+        if (m_Grounded && jump && m_Anim.GetBool("Ground"))    // jump
+        {
             m_Grounded = false;
             m_Anim.SetBool("Ground", false);
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+
+            return;
         }
-        else if (!m_Grounded && !jumpPressed && m_Rigidbody2D.velocity.y > m_ReleaseJumpSpeed)
+
+        if (!m_Grounded && !jumpPressed && !m_inAirBecauseKilledOrHitEnemy && m_Rigidbody2D.velocity.y > m_ReleaseJumpSpeed) //stop going up if player release jump button
         {
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_ReleaseJumpSpeed);
-        }
-        else if (!m_Grounded && jump)
-        {
-            bool canShoot = m_WeaponShooter.ShootWeapon(m_GroundCheck.position);
 
+            return;
+        }
+
+        bool shouldShoot = jump || (m_WeaponShooter.IsAutomatic() && jumpPressed);
+        if (!m_Grounded && shouldShoot)   // try to shot weapon
+        {
+            bool canShoot = m_WeaponShooter.TryShootWeapon(m_GroundCheck.position);
             if (canShoot)
             {
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_ReleaseJumpSpeed);
             }
+
+            return;
         }
     }
 
@@ -137,7 +244,19 @@ public class DownWellPlataformerController : MonoBehaviour
         m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
         // Move the character
-        m_Rigidbody2D.velocity = new Vector2(move * m_MaxSpeed, m_Rigidbody2D.velocity.y < -m_MaxFallSpeed ? -m_MaxFallSpeed : m_Rigidbody2D.velocity.y);
+        float speedX = move * m_MaxSpeed;
+        if (m_isThrownByEnemy)
+        {
+            speedX = m_Rigidbody2D.velocity.x;
+            m_currentHitByEnemyThrowTime -= Time.deltaTime;
+            if (m_currentHitByEnemyThrowTime <= 0)
+            {
+                m_isThrownByEnemy = false;
+                GameManager.systems.timeManager.DisableSlowHitByEnemy();
+            }
+        }
+
+        m_Rigidbody2D.velocity = new Vector2(speedX, m_Rigidbody2D.velocity.y < -m_MaxFallSpeed ? -m_MaxFallSpeed : m_Rigidbody2D.velocity.y);
 
         // If the input is moving the player right and the player is facing left...
         if (move > 0 && !m_FacingRight)

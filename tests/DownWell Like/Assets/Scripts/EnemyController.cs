@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    private HealthController m_healthController;
+    public bool canBeSmashed = true;
+
+    private void Awake()
+    {
+        m_healthController = GetComponent<HealthController>();
+    }
+
     void Update()
     {
         float distanceToCamera = transform.position.y - GameManager.systems.mainCamera.transform.position.y;
@@ -11,5 +19,17 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public bool Hit(int damage)
+    {
+        m_healthController.RemoveLife(damage);
+        if (m_healthController.GetLife() <= 0)
+        {
+            Destroy(gameObject);
+            return true;
+        }
+
+        return false;
     }
 }

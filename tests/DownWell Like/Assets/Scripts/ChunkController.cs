@@ -36,6 +36,24 @@ public class ChunkController : MonoBehaviour
         {
             GameManager.systems.enemySpawner.SpawnEnemies(this);
         }
-        
+    }
+
+    public BoxCollider2D GetAndDeleteRandomLandSpawner()
+    {
+        return GetAndDeleteRandomSpawner(landSpawners);
+    }
+
+    public BoxCollider2D GetAndDeleteRandomAirSpawner()
+    {
+        return GetAndDeleteRandomSpawner(airSpawners);
+    }
+
+    private BoxCollider2D GetAndDeleteRandomSpawner(List<BoxCollider2D> spawners)
+    {
+        int randomIndex = Random.Range(0, spawners.Count - 1);
+        BoxCollider2D randomSpawner = spawners[randomIndex];
+        spawners.RemoveAt(randomIndex);
+
+        return randomSpawner;
     }
 }

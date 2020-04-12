@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Doozy.Engine.Nody;
+using UnityEngine;
 
 public class Systems : MonoBehaviour
 {
@@ -6,6 +7,11 @@ public class Systems : MonoBehaviour
     public ShakeController shakeController;
     public EnemySpawner enemySpawner;
     public Transform player;
+    public ChunksManager chunksManager;
+    public TimeManager timeManager;
+    public HitOverlayController hitOverlayController;
+    public GraphController graphController;
+    public WeaponShooter weaponShooter;
 
     public GameObject m_particleBoxes;
     public GameObject m_particleEnemies;
