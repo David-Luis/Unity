@@ -50,6 +50,8 @@ MonoBehaviour:
     type: 3}
   enemy2Prefab: {fileID: 6503919235882665389, guid: dbb3ad7c96add7446a82e04bffeb9e33,
     type: 3}
+  explosionPrefab: {fileID: 3800619403096212586, guid: 04384d5d72829e64387e504d7bcd8f60,
+    type: 3}
 --- !u!114 &2341918571852178207
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -53,3 +53,6 @@ TagManager:
   - name: Units
     uniqueID: 2543158045
     locked: 0
+  - name: Effects
+    uniqueID: 4260546827
+    locked: 0

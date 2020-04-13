@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemy1Prefab;
     public GameObject enemy2Prefab;
+    public GameObject explosionPrefab;
 
     private GameObject m_player;
     private Dungeon m_dungeon;
@@ -76,6 +77,11 @@ public class GameManager : MonoBehaviour
         instance.m_gameObjectsToDestruct.Add(gameObject);
     }
 
+    public static void AddExplosion(Vector3 position)
+    {
+        Instantiate(instance.explosionPrefab, position, Quaternion.identity);
+    }
+
     public static void ProcessTurn()
     {
         foreach (var gameObject in instance.m_gameObjectsToDestruct)
@@ -83,6 +89,7 @@ public class GameManager : MonoBehaviour
             Tile tile = instance.m_dungeon.GetTileAtPosition(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y));
             tile.m_gameObjects.Remove(gameObject);
             instance.m_gameObjectsToProcessTurn.Remove(gameObject);
+            AddExplosion(gameObject.transform.position);
             Destroy(gameObject);
         }
         instance.m_gameObjectsToDestruct.Clear();
