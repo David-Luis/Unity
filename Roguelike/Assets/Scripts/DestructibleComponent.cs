@@ -5,6 +5,7 @@ using UnityEngine;
 public class DestructibleComponent : BaseComponent
 {
     public int health = 100;
+
     public void ReceiveAttack(int damage)
     {
         health -= damage;

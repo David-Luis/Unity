@@ -40,9 +40,9 @@ public class MovableComponent : BaseComponent
 
     bool CanMoveToTile(Tile requestedTile)
     {
-        if (requestedTile.m_gameObjects.Count == 1 && requestedTile.m_gameObjects[0].CompareTag("Floor"))
+        if (requestedTile.m_gameObjects.Count == 1 && requestedTile.m_gameObjects[0].CompareTag("Wall"))
         {
-            return true;
+            return false;
         }
 
         foreach (var gameObject in requestedTile.m_gameObjects)
