@@ -1,0 +1,26 @@
+- traer todo a Unity
+	- ir metiendo los componentes
+	- girar personaje y enemigos
+	- animaciones de atacar y recibir ataque
+	
+- deshabilitar físicas Unity da perfomancia??
+
+- editor de mazmorras para hacer pruebas
+	pintar:
+		- suelo
+		- pared
+		- player
+		- enemigos
+	show zoom value in the ui
+
+- enemigo más avanzado
+	- sigue al player de verdad
+	- hacer a*?
+	- enemigo que explota
+	- enemigo que dispara a distancia
+	
+- añadir el concepto de escena, que tiene unos assets concretos que cargar y descagar
+- poderes y maná
+- para evitar cargar de un fichero siempre que se añade un enemigo, 1. guardar en memoria, 2. cargar enemigos, 3. borrar memoria
+- tema de las layers
+
