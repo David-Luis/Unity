@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6145502649549946832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6145502649549946833}
+  - component: {fileID: 6145502649549946846}
+  - component: {fileID: 2341918571852178207}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6145502649549946833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6145502649549946832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6145502649549946846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6145502649549946832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ba6cf34cc489f45b8c114577a74b93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 3880499470755976344, guid: 3c03a646fe41b65498a90925bc973fcc,
+    type: 3}
+  enemy1Prefab: {fileID: 3757538477146450044, guid: 40b53a3674bc0fc429fba5ada0942d8f,
+    type: 3}
+  enemy2Prefab: {fileID: 6503919235882665389, guid: dbb3ad7c96add7446a82e04bffeb9e33,
+    type: 3}
+  explosionPrefab: {fileID: 3800619403096212586, guid: 04384d5d72829e64387e504d7bcd8f60,
+    type: 3}
+--- !u!114 &2341918571852178207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6145502649549946832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b080ffc7107323347b97f95a843c097c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walls:
+  - {fileID: 7848009557601822136, guid: fcbf7bf85a8a8fd4d9ec808779a1e8e6, type: 3}
+  - {fileID: 7271927365083547283, guid: c1f13e6dce20b1843a54d48f0b28cf5e, type: 3}
+  - {fileID: 3484603298571872064, guid: 1e23bc80be6d4d44eb924bdbea189202, type: 3}
+  floors:
+  - {fileID: 6274369427602203668, guid: 9faada4c3575d344c9f104263fa56655, type: 3}
+  - {fileID: 3307701435448519380, guid: 06509c0baa7bc8d40ae26efb9d5c8a45, type: 3}
+  - {fileID: 5953062115412717486, guid: 73be2ecc397f6a7498d1c5df41e60bf2, type: 3}
+  - {fileID: 3660862815179820198, guid: 279f25e41d15f364384e467c4d2a148a, type: 3}
+  - {fileID: 977126377642818483, guid: 2bdd4e37f31d0ec43ac5f0091264bb07, type: 3}
+  - {fileID: 2505427961606832741, guid: 6703d12851923624aa0ce9954d36143c, type: 3}
+  - {fileID: 7872958430284456730, guid: 750d0cb1cdf0ea14e8703d04b8752459, type: 3}
+  - {fileID: 5558752417172608257, guid: 26fff2482c9b62042a01451cf3f87f1f, type: 3}
