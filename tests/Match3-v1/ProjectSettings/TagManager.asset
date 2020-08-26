@@ -3,10 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Fire
-  - breakable
-  - enemy
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -16,14 +13,14 @@ TagManager:
   - UI
   - 
   - 
-  - Collisions
-  - Ground
-  - Player
-  - Spawners
-  - Enemy
-  - GroundChecker
-  - Weapon
-  - Gem
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -43,7 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Overlay
-    uniqueID: 2742591775
     locked: 0
