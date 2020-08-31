@@ -24,6 +24,11 @@ public class Swappable : MonoBehaviour
 
     private void OnMouseDown() 
     {
+        if (GridManager.Instance.State != GridManager.EState.Ready)
+        {
+            return;
+        }
+
         if (s_selected != null)
         {
             if (s_selected == this)
