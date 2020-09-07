@@ -7,12 +7,16 @@
         return m_isCompleted;
     }
 
-    public void Update()
+    public virtual void Update()
     {
 
     }
 
-    protected void Complete()
+    public virtual void OnStart()
+    {
+    }
+
+    protected virtual void Complete()
     {
         m_isCompleted = true;
     }

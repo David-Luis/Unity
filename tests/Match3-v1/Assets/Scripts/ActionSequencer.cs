@@ -1,27 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class ActionSequencer 
 {
-    private List<Action> m_actions;
+    private List<Action> m_actions = new List<Action>();
 
     public void Add(Action action)
     {
         m_actions.Add(action);
+        if (m_actions.Count == 1)
+        {
+            action.OnStart();
+        }
     }
 
     public void Update()
     {
-        foreach (Action action in m_actions)
+        if (m_actions.Count > 0)
         {
+            Action action = m_actions[0];
             action.Update();
+            if (action.IsCompleted())
+            {
+                m_actions.RemoveAt(0);
+                if (m_actions.Count > 0)
+                {
+                    m_actions[0].OnStart();
+                }
+            }
         }
-
-        m_actions.RemoveAll(IsCompleted);
     }
 
-    private static bool IsCompleted(Action action)
+    public bool HasActions()
     {
-        return action.IsCompleted();
+        return m_actions.Count != 0;
     }
 }

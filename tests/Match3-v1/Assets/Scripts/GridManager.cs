@@ -2,35 +2,34 @@
 using UnityEngine;
 
 using DG.Tweening;
+using System;
 
-//TODO: Playback secuences (pensar otro nombre), con su "complete" para pasar a la siguiente, así haremos:
-//TODO: ANIMACIÓN DE DESTRUCCIÓN
-//TODO: ver si puedo usar lo de playback secuences también para hacer el swap y el match
-//TODO: separar lógica en diferentes clases
+//TODO: meter un booster
+//TODO: separar esta clase en diferentes clases
 //TODO: try to remove all the GetComponent as much as possible
+//TODO: temas de resoluciones
+//TODO: Add more types of matches
 public class GridManager : MonoBehaviour
 {
+    public ActionSequencer ActionSequencer = new ActionSequencer();
+
     public List<Sprite> Sprites = new List<Sprite>();
     public GameObject GamePiecePrefab;
     public int GridDimension = 8;
+
     public float Distance = 1.0f;
 
-    private GameObject[,] m_grid;
+    public GameObject[,] m_grid;
 
     public static GridManager Instance { get; private set; }
 
-    private const float FALL_DURATION = 0.6f;
-    private const float SWAP_DURATION = 0.2f;
-    
-    public EState State;
+    public HashSet<GameObject> MatchedBoardObjects { get; private set; }
 
-    public enum EState
+    public bool CanInteract()
     {
-        Ready,
-        Swapping,
-        Matching
+        return !ActionSequencer.HasActions();
     }
-
+    
     void Awake()
     {
         Instance = this;
@@ -38,13 +37,13 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        State = EState.Ready;
         m_grid = new GameObject[GridDimension, GridDimension];
         InitGrid();
     }
 
     void Update()
     {
+        ActionSequencer.Update();
     }
 
     void InitGrid()
@@ -58,7 +57,12 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private GameObject CreateGamePiece(int column, int row)
+    public GameObject[,] GetGrid()
+    {
+        return m_grid;
+    }
+
+    public GameObject CreateGamePiece(int column, int row)
     {
         var possibleSprites = new List<Sprite>(Sprites);
 
@@ -76,7 +80,7 @@ public class GridManager : MonoBehaviour
             possibleSprites.Remove(down1);
         }
 
-        var sprite = possibleSprites[Random.Range(0, possibleSprites.Count)];
+        var sprite = possibleSprites[UnityEngine.Random.Range(0, possibleSprites.Count)];
         var gamePiece = CreateGameObject(column, row, sprite);
 
         m_grid[column, row] = gamePiece;
@@ -100,13 +104,14 @@ public class GridManager : MonoBehaviour
         return newTile;
     }
 
-    private Vector3 GetPositionForGameObjectAt(int row, int column)
+    public Vector3 GetPositionForGameObjectAt(int row, int column)
     {
         Vector3 positionOffset = transform.position - new Vector3(GridDimension * Distance / 2.0f, GridDimension * Distance / 2.0f, 0);
+
         return new Vector3(column * Distance, row * Distance, 0) + positionOffset;
     }
 
-    private GameObject GetBoardElementAt(int column, int row)
+    public GameObject GetBoardElementAt(int column, int row)
     {
         if (column < 0 || column >= GridDimension
             || row < 0 || row >= GridDimension)
@@ -124,106 +129,42 @@ public class GridManager : MonoBehaviour
 
     private void SwapTiles(Vector2Int tile1Position, Vector2Int tile2Position, bool tryMatch)
     {
-        State = EState.Swapping;
-
-        GameObject boardElement1 = m_grid[tile1Position.x, tile1Position.y];
-        Tile tile1 = boardElement1.GetComponent<Tile>();
-
-        GameObject boardElement2 = m_grid[tile2Position.x, tile2Position.y];
-        Tile tile2 = boardElement2.GetComponent<Tile>();
-
-        //swap logic: in the grid
-        var tempGameObject = m_grid[tile1Position.x, tile1Position.y];
-        m_grid[tile1Position.x, tile1Position.y] = m_grid[tile2Position.x, tile2Position.y];
-        m_grid[tile2Position.x, tile2Position.y] = tempGameObject;
-
-        //swap logic: in the tile component
-        var tempTile = new Vector2Int(tile1.Position.x, tile1.Position.y);
-        tile1.Position.Set(tile2.Position.x, tile2.Position.y);
-        tile2.Position.Set(tempTile.x, tempTile.y);
-
-        //swap logic: change the name for debugging pourposes
-        boardElement1.name = "Tile_" + tile1.Position.x + "_" + tile1.Position.y;
-        boardElement2.name = "Tile_" + tile2.Position.x + "_" + tile2.Position.y;
-
-        //swap graphics: move to his new position
-        boardElement1.transform.DOMove(new Vector3(boardElement2.transform.position.x, boardElement2.transform.position.y, boardElement2.transform.position.z), SWAP_DURATION);
-        boardElement2.transform.DOMove(new Vector3(boardElement1.transform.position.x, boardElement1.transform.position.y, boardElement1.transform.position.z), SWAP_DURATION).OnComplete(() =>
-        {
-            if (tryMatch)
-            {
-                OnCompleteSwap(boardElement1, boardElement2, tile1Position, tile2Position);
-            }
-            else
-            {
-                State = EState.Ready;
-            }
-        });
+        ActionSequencer.Add(new SwapAction(tile1Position, tile2Position, tryMatch));
     }
 
-    private void MoveTileToEmptyPosition(GameObject boardElement, Vector2Int emptyPosition)
+    public bool CalculateMatches()
     {
-        Tile tile = boardElement.GetComponent<Tile>();
-
-        GameObject boardElementEmpty = m_grid[emptyPosition.x, emptyPosition.y];
-
-        //swap logic: in the grid
-        m_grid[emptyPosition.x, emptyPosition.y] = boardElement;
-
-        //swap logic: in the tile component
-        tile.Position.Set(emptyPosition.x, emptyPosition.y);
-
-        //swap logic: change the name for debugging pourposes
-        boardElement.name = "Tile_" + tile.Position.x + "_" + tile.Position.y;
-
-        //swap graphics: move to his new position
-        boardElement.transform.DOMove(new Vector3(boardElementEmpty.transform.position.x, boardElementEmpty.transform.position.y, boardElementEmpty.transform.position.z), FALL_DURATION);
-    }
-
-    void OnCompleteSwap(GameObject boardElement1, GameObject boardElement2, Vector2Int tile1Position, Vector2Int tile2Position)
-    {
-        bool foundMatch = ResolveMatches();
-        if (!foundMatch)
-        {
-            SwapTiles(tile1Position, tile2Position, tryMatch: false);
-        }
-    }
-
-    //TODO: Add more types of matches
-    bool CheckMatches()
-    {
-        HashSet<GameObject> matchedBoardObjects = new HashSet<GameObject>(); 
+        MatchedBoardObjects = new HashSet<GameObject>();
         for (int row = 0; row < GridDimension; row++)
         {
-            for (int column = 0; column < GridDimension; column++) 
+            for (int column = 0; column < GridDimension; column++)
             {
-                GameObject current = GetBoardElementAt(column, row); 
+                GameObject current = GetBoardElementAt(column, row);
 
-                List<GameObject> horizontalMatches = FindColumnMatchForTile(column, row, current); 
+                List<GameObject> horizontalMatches = FindColumnMatchForTile(column, row, current);
                 if (horizontalMatches.Count >= 2)
                 {
-                    matchedBoardObjects.UnionWith(horizontalMatches);
-                    matchedBoardObjects.Add(current); 
+                    MatchedBoardObjects.UnionWith(horizontalMatches);
+                    MatchedBoardObjects.Add(current);
                 }
 
-                List<GameObject> verticalMatches = FindRowMatchForTile(column, row, current); 
+                List<GameObject> verticalMatches = FindRowMatchForTile(column, row, current);
                 if (verticalMatches.Count >= 2)
                 {
-                    matchedBoardObjects.UnionWith(verticalMatches);
-                    matchedBoardObjects.Add(current);
+                    MatchedBoardObjects.UnionWith(verticalMatches);
+                    MatchedBoardObjects.Add(current);
                 }
             }
         }
 
-        
-        foreach (var boardObject in matchedBoardObjects) 
+        foreach (var boardObject in MatchedBoardObjects)
         {
             boardObject.GetComponent<Tile>().Removed = true;
         }
 
-        return matchedBoardObjects.Count > 0; 
+        return MatchedBoardObjects.Count > 0;
     }
-
+    
     List<GameObject> FindColumnMatchForTile(int col, int row, GameObject boardObject)
     {
         List<GameObject> result = new List<GameObject>();
@@ -252,51 +193,5 @@ public class GridManager : MonoBehaviour
             result.Add(GetBoardElementAt(col, i));
         }
         return result;
-    }
-
-    bool ResolveMatches()
-    {
-        bool foundMatch = CheckMatches();
-        if (!foundMatch)
-        {
-            State = EState.Ready;
-            return false;
-        }
-
-        State = EState.Matching;
-        for (int column = 0; column < GridDimension; column++)
-        {
-            int tilesToFall = 0;
-            for (int row = 0; row < GridDimension; row++)
-            {
-                GameObject boardElement = GetBoardElementAt(column, row);
-                if (boardElement.GetComponent<Tile>().Removed)
-                {
-                    tilesToFall++;
-                    Destroy(boardElement);
-                }
-                else if (tilesToFall > 0)
-                {
-                    MoveTileToEmptyPosition(boardElement, new Vector2Int(column, row - tilesToFall));
-                }
-            }
-
-            int currentStartYOfsset = 0;
-            for (int row = GridDimension-tilesToFall; row < GridDimension; row++)
-            {
-                GameObject gamePiece = CreateGamePiece(column, row);
-                Vector3 endPosition = new Vector3(gamePiece.transform.position.x, gamePiece.transform.position.y, gamePiece.transform.position.z);
-                gamePiece.transform.position = GetPositionForGameObjectAt(GridDimension + currentStartYOfsset, column);
-                gamePiece.transform.DOMove(endPosition, FALL_DURATION);
-
-                currentStartYOfsset++;
-            }
-
-
-        }
-
-        Invoke("ResolveMatches", FALL_DURATION*1.2f);
-
-        return true;
     }
 }
