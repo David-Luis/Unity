@@ -20,19 +20,19 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
+        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness && Input.mousePosition.y <= Screen.height)
         {
             transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness)
+        if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness && Input.mousePosition.y >= 0)
         {
             transform.Translate(Vector3.back * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
+        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness && Input.mousePosition.x <= Screen.width)
         {
             transform.Translate(Vector3.right * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness)
+        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness && Input.mousePosition.x >= 1)
         {
             transform.Translate(Vector3.left * panSpeed * Time.deltaTime, Space.World);
         }
@@ -43,8 +43,6 @@ public class CameraController : MonoBehaviour
             Vector3 pos = transform.position;
             zoomTargetY = pos.y - scroll * zoomSpeed * Time.deltaTime;
             zoomTargetY = Mathf.Clamp(zoomTargetY, minY, maxY);
-
-            Debug.Log(scroll + ", " + transform.position.y + ", " + zoomTargetY);
         }
 
         
