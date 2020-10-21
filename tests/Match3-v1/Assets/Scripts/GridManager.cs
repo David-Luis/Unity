@@ -4,11 +4,13 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 
-//TODO: meter un booster
 //TODO: separar esta clase en diferentes clases
+//TODO: meter un booster
 //TODO: try to remove all the GetComponent as much as possible
 //TODO: temas de resoluciones
 //TODO: Add more types of matches
+//TODO: Pensar como haría un editor y añadir un botón en el editor para jugar el nivel
+
 public class GridManager : MonoBehaviour
 {
     public ActionSequencer ActionSequencer = new ActionSequencer();
