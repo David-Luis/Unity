@@ -4,16 +4,27 @@ using UnityEngine.AI;
 public class EnemyComponent : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
-    public Transform targetPosition;
+    private Transform destination = null;
 
-    // Start is called before the first frame update
+    private Animator animator;
+
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.SetDestination(targetPosition.position);
+        if (destination != null)
+        {
+            navMeshAgent.SetDestination(destination.position);
+        }
+
+        animator = GetComponentInChildren<Animator>();
+        animator.SetFloat("MoveSpeed", 1.0f);
     }
 
-    // Update is called once per frame
+    public void SetDestination(Transform destination)
+    {
+        this.destination = destination;
+    }
+
     void Update()
     {
         
