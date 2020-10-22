@@ -319,18 +319,18 @@ namespace UnityEngine.AI
                 switch (src.shape)
                 {
                     case NavMeshBuildSourceShape.Mesh:
-                    {
-                        var m = src.sourceObject as Mesh;
-                        result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, m.bounds));
-                        break;
-                    }
+                        {
+                            var m = src.sourceObject as Mesh;
+                            result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, m.bounds));
+                            break;
+                        }
                     case NavMeshBuildSourceShape.Terrain:
-                    {
-                        // Terrain pivot is lower/left corner - shift bounds accordingly
-                        var t = src.sourceObject as TerrainData;
-                        result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, new Bounds(0.5f * t.size, t.size)));
-                        break;
-                    }
+                        {
+                            // Terrain pivot is lower/left corner - shift bounds accordingly
+                            var t = src.sourceObject as TerrainData;
+                            result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, new Bounds(0.5f * t.size, t.size)));
+                            break;
+                        }
                     case NavMeshBuildSourceShape.Box:
                     case NavMeshBuildSourceShape.Sphere:
                     case NavMeshBuildSourceShape.Capsule:
@@ -361,6 +361,7 @@ namespace UnityEngine.AI
         }
 
 #if UNITY_EDITOR
+#pragma warning disable CS0618 
         bool UnshareNavMeshAsset()
         {
             // Nothing to unshare
@@ -376,7 +377,6 @@ namespace UnityEngine.AI
             var prefab = UnityEditor.PrefabUtility.GetPrefabParent(this) as NavMeshSurface;
             if (prefab != null && prefab.navMeshData == navMeshData)
                 return false;
-
             // Don't allow referencing an asset that's assigned to another surface
             for (var i = 0; i < s_NavMeshSurfaces.Count; ++i)
             {
@@ -421,6 +421,7 @@ namespace UnityEngine.AI
                     m_TileSize = kMaxTileSize;
             }
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 #endif
     }
 }

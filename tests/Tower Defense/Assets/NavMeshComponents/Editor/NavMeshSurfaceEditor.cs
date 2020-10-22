@@ -7,6 +7,7 @@ using UnityEditorInternal;
 using UnityEngine.AI;
 using UnityEngine;
 
+#pragma warning disable CS0618 
 namespace UnityEditor.AI
 {
     [CanEditMultipleObjects]
@@ -483,3 +484,5 @@ namespace UnityEditor.AI
         }
     }
 }
+
+#pragma warning restore CS0618 // Type or member is obsolete

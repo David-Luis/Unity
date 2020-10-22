@@ -3,14 +3,74 @@
 public class EnemySpawnerComponent : MonoBehaviour
 {
     [SerializeField]
-    public GameObject enemy;
-    public GameObject playerBase;
+    private GameObject enemy = null;
+    [SerializeField]
+    private GameObject playerBase = null;
 
+    [SerializeField]
+    private WaveDefinition[] waves = null;
 
+    private WaveDefinition currentWave = null;
+    private int currentWaveIndex;
+
+    int nextSpawnAmount = 0;
+    float waveTotalTimeSeconds = 0;
+    float nextSpawnTimeSeconds = 0;
+    bool isWaveActive = true;
 
     void Start()
     {
-        for (int i = 0; i < 10; i++)
+        currentWaveIndex = -1;
+        currentWave = GetNextWave();
+        PrepareNextSpawn();
+        nextSpawnTimeSeconds = 0;
+    }
+
+    void Update()
+    {
+        if (isWaveActive)
+        {
+            waveTotalTimeSeconds += Time.deltaTime;
+            if (waveTotalTimeSeconds >= currentWave.DurationSeconds)
+            {
+                FinishWave();
+            }
+            else
+            {
+                ProcessCurrentWave();
+            }
+        }
+    }
+
+    private void PrepareNextSpawn()
+    {
+        nextSpawnAmount = Random.Range(currentWave.MinSpawnSimultaniousEnemies, currentWave.MaxSpawnSimultaniousEnemies+1);
+        nextSpawnTimeSeconds = waveTotalTimeSeconds + Random.Range(currentWave.MinNextSpawnInSeconds, currentWave.MaxNextSpawnInSeconds);
+    }
+
+    private WaveDefinition GetNextWave()
+    {
+        currentWaveIndex++;
+        if (currentWaveIndex >= waves.Length)
+        {
+            currentWaveIndex = waves.Length-1;
+        }
+
+        return waves[currentWaveIndex];
+    }
+
+    private void ProcessCurrentWave()
+    {
+        if (waveTotalTimeSeconds >= nextSpawnTimeSeconds)
+        {
+            SpawnEnemies();
+            PrepareNextSpawn();
+        }
+    }
+
+    private void SpawnEnemies()
+    {
+        for (int i = 0; i < nextSpawnAmount; i++)
         {
             GameObject newEnemy = Instantiate(enemy, transform.position, Quaternion.identity, transform);
             EnemyComponent enemyComponent = newEnemy.GetComponent<EnemyComponent>();
@@ -18,8 +78,8 @@ public class EnemySpawnerComponent : MonoBehaviour
         }
     }
 
-    void Update()
+    private void FinishWave()
     {
-
+        isWaveActive = false;
     }
 }
