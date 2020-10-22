@@ -6,6 +6,9 @@ public class TurretComponent : MonoBehaviour
     private GameObject rangeCilinder = null;
 
     [SerializeField]
+    private GameObject minRangeCilinder = null;
+
+    [SerializeField]
     private ShootComponent shootComponent = null;
 
     [SerializeField]
@@ -22,6 +25,12 @@ public class TurretComponent : MonoBehaviour
     private void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
+
+        rangeCilinder.transform.localScale = new Vector3(maxRange*2, rangeCilinder.transform.localScale.y, maxRange*2);
+        minRangeCilinder.transform.localScale = new Vector3(minRange*2, minRangeCilinder.transform.localScale.y, minRange*2);
+
+        rangeCilinder.SetActive(false);
+        minRangeCilinder.SetActive(false);
     }
 
     private void UpdateTarget()
@@ -47,5 +56,17 @@ public class TurretComponent : MonoBehaviour
         }
 
         targetLookAtComponent.LookAt(target);
+    }
+
+    void OnMouseOver()
+    {
+        rangeCilinder.SetActive(true);
+        minRangeCilinder.SetActive(true);
+    }
+
+    void OnMouseExit()
+    {
+        rangeCilinder.SetActive(false);
+        minRangeCilinder.SetActive(false);
     }
 }

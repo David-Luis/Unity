@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class TargetLookAtComponent : MonoBehaviour
 {
@@ -20,17 +21,22 @@ public class TargetLookAtComponent : MonoBehaviour
         {
             Vector3 dir = target.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(dir);
-            Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
-            transform.rotation = Quaternion.Euler(rotation);
+            RotateToTarget(lookRotation);
         }
+        else
+        {
+            RotateToTarget(Quaternion.Euler(defaultRotationX, defaultRotationY, defaultRotationZ));
+        }
+    }
+
+    private void RotateToTarget(Quaternion lookRotation)
+    {
+        Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        transform.rotation = Quaternion.Euler(rotation);
     }
 
     public void LookAt(Transform target)
     {
         this.target = target;
-        if (!target)
-        {
-            transform.rotation = Quaternion.Euler(defaultRotationX, defaultRotationY, defaultRotationZ);
-        }
     }
 }
