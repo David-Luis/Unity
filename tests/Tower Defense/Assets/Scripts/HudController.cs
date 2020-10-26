@@ -49,7 +49,7 @@ public class HudController : IGameSystem
         }
         else if (message.EventName == "onPurchaseTurret1")
         {
-            
+            Systems.gameController.PlaceTurret();
         }
     }
 }

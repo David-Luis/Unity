@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - Spawner
   - UIHud
+  - PlaceablePlane
+  - PlaceableZone
+  - Placeable
   layers:
   - Default
   - TransparentFX
@@ -17,8 +20,8 @@ TagManager:
   - 
   - 
   - enemies
-  - 
-  - 
+  - placeablePlane
+  - placeableZone
   - 
   - 
   - 
