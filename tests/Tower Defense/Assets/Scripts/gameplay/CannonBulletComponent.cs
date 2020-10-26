@@ -44,6 +44,9 @@ public class CannonBulletComponent : BulletComponent
         Destroy(particleEffect, particles.startLifetime + particles.duration);
 #pragma warning restore CS0618 // Type or member is obsolete
 
+        DestructibleComponent destructibleComponent = target.GetComponent<DestructibleComponent>();
+        destructibleComponent.Hit(damage);
+
         Destroy(gameObject);
     }
 }

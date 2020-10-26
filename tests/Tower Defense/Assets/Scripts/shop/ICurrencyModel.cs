@@ -2,4 +2,5 @@
 {
     void SpendCoins(int value);
     int GetCoins();
+    void AddCoins(int value);
 }

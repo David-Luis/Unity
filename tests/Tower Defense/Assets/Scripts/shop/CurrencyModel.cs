@@ -17,5 +17,10 @@
         return coins;
     }
 
+    public virtual void AddCoins(int value)
+    {
+        coins += value;
+    }
+
     public void Update(float dt) {}
 }

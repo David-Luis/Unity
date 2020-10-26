@@ -609,7 +609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPosition: {fileID: 6403693366633835417}
   bullet: {fileID: 2199999913884995197, guid: 1a9fa1a70f1c3a449ae228c0efb58cb8, type: 3}
-  fireRate: 0.5
+  fireRate: 5
 --- !u!65 &6623785742024313361
 BoxCollider:
   m_ObjectHideFlags: 0

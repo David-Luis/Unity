@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using System;
 
 public class HudController : IGameSystem
 {
@@ -11,9 +10,7 @@ public class HudController : IGameSystem
     TextMeshProUGUI coinsText = null;
 
     const int TURRETS_AMOUNT = 3;
-    List<GameObject> turretGameObjects;
-
-    string[] turretsProducts = { Products.TURRET_1, Products.TURRET_2, Products.TURRET_3 };
+    List<TurretUIHudComponent> turretHudComponents;
 
     public HudController()
     {
@@ -49,10 +46,11 @@ public class HudController : IGameSystem
         }
         else if (message.EventName == "onPurchaseTurret1")
         {
-            if (Systems.purchasesController.Purchase(turretsProducts[0]))
+            if (Systems.purchasesController.Purchase(Products.TURRET_1))
             {
-                Systems.gameController.PlaceTurret(turretsProducts[0]);
+                Systems.gameController.PlaceTurret(Products.TURRET_1);
             }
+            Refresh();
         }
         else if (message.EventName == "onShowHud")
         {
@@ -68,31 +66,27 @@ public class HudController : IGameSystem
         buttonWave = hudGameObject.transform.Find("Button - StartWave").GetComponent<Button>();
         coinsText = hudGameObject.transform.Find("coinsPlayer").GetComponent<TextMeshProUGUI>();
 
-        turretGameObjects = new List<GameObject>(TURRETS_AMOUNT);
+        turretHudComponents = new List<TurretUIHudComponent>(TURRETS_AMOUNT);
         for (int i = 0; i < TURRETS_AMOUNT; i++)
         {
-            turretGameObjects.Add(hudGameObject.transform.Find("Turret_" + i.ToString()).gameObject);
+            turretHudComponents.Add(hudGameObject.transform.Find("Turret_" + i.ToString()).gameObject.GetComponent<TurretUIHudComponent>());
         }
 
-        ConfigureTurretsInfo();
+        RefreshTurretsInfo();
     }
 
-    private void ConfigureTurretsInfo()
+    private void RefreshTurretsInfo()
     {
-        for (int i = 0; i < TURRETS_AMOUNT; i++)
+        foreach (TurretUIHudComponent turretComponent in turretHudComponents)
         {
-            int value = Systems.purchasesController.GetProductValue(turretsProducts[i]);
-            TextMeshProUGUI coinsText = turretGameObjects[i].transform.Find("coins").GetComponent<TextMeshProUGUI>();
-            Button button = turretGameObjects[i].transform.Find("Button - Turret").GetComponent<Button>();
-
-            coinsText.SetText(value.ToString());
-            button.interactable = value <= Systems.currencyModel.GetCoins();
+            turretComponent.Refresh();
         }
     }
 
     public void Refresh()
     {
         coinsText.SetText(Systems.currencyModel.GetCoins().ToString());
+        RefreshTurretsInfo();
     }
 
     public void Update(float deltaTime) { }

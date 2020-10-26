@@ -21,7 +21,7 @@ public class Systems : MonoBehaviour
 
         hudController = new HudController();
         wavesController = new WavesController();
-        currencyModel = new DebugCurrencyModel(5);
+        currencyModel = new DebugCurrencyModel(6);
         purchasesController = new PurchasesController();
 
         gameSystems.Add(hudController);

@@ -10,6 +10,8 @@ TagManager:
   - PlaceablePlane
   - PlaceableZone
   - Placeable
+  - Portal
+  - EnemyTarget
   layers:
   - Default
   - TransparentFX

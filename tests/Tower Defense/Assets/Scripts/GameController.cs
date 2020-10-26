@@ -22,4 +22,10 @@ public class GameController : MonoBehaviour
         PlaceableComponent placeableComponent = turret.GetComponent<PlaceableComponent>();
         placeableComponent.StartPlacing();
     }
+
+    internal void OnEnemyDead(int coinsReward)
+    {
+        Systems.currencyModel.AddCoins(coinsReward);
+        Systems.hudController.Refresh();
+    }
 }
