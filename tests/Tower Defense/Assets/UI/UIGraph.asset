@@ -93,6 +93,87 @@ MonoBehaviour:
   - Category: Tower Defense
     InstantAction: 0
     Name: Splash
+--- !u!114 &-7896204402935901500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97aebf4d1c7c46d9843e5c78fd464d44, type: 3}
+  m_Name: GameEventNode
+  m_EditorClassIdentifier: 
+  ErrorNodeNameIsEmpty: 0
+  ErrorDuplicateNameFoundInGraph: 0
+  m_inputSockets:
+  - m_connectionMode: 1
+    m_connections:
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: 63cda3e1-1c85-4f59-8853-057941450e66
+      m_inputNodeId: 06983dbf-df85-42b5-be30-fae32f2bd665
+      m_inputSocketId: a2b57335-4994-45c0-9174-8b146811ca21
+      m_outputNodeId: 59642528-34e2-4666-a464-87fc46a252e0
+      m_outputSocketId: 23a23f0c-b56e-4268-b0be-2b90ce4276db
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 0
+    m_canBeDeleted: 0
+    m_canBeReordered: 0
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 38
+    m_id: a2b57335-4994-45c0-9174-8b146811ca21
+    m_nodeId: 06983dbf-df85-42b5-be30-fae32f2bd665
+    m_socketName: InputSocket_0
+    m_value: '{}'
+    m_valueTypeQualifiedName: Doozy.Engine.Nody.Connections.PassthroughConnection,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_outputSockets:
+  - m_connectionMode: 0
+    m_connections: []
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 1
+    m_canBeDeleted: 0
+    m_canBeReordered: 0
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 62
+    m_id: e8bef5e6-2d67-4ce1-9a7a-614608697680
+    m_nodeId: 06983dbf-df85-42b5-be30-fae32f2bd665
+    m_socketName: OutputSocket_0
+    m_value: '{}'
+    m_valueTypeQualifiedName: Doozy.Engine.Nody.Connections.PassthroughConnection,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_nodeType: 4
+  m_allowDuplicateNodeName: 0
+  m_allowEmptyNodeName: 0
+  m_canBeDeleted: 1
+  m_debugMode: 0
+  m_useFixedUpdate: 0
+  m_useLateUpdate: 0
+  m_useUpdate: 0
+  m_height: 156
+  m_width: 216
+  m_x: 396
+  m_y: 48
+  m_minimumInputSocketsCount: 1
+  m_minimumOutputSocketsCount: 1
+  m_graphId: f5896f85-e297-4a09-bcd2-b77f5a6ac30b
+  m_id: 06983dbf-df85-42b5-be30-fae32f2bd665
+  m_name: Send Game Events
+  m_notes: 
+  ErrorNotSendingAnyGameEvent: 0
+  GameEvent: onShowHud
 --- !u!114 &-1179357750013271290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,11 +288,12 @@ MonoBehaviour:
   - {fileID: 4332548151088030606}
   - {fileID: -1179357750013271290}
   - {fileID: 3443248229980587347}
+  - {fileID: -7896204402935901500}
   m_isSubGraph: 0
   m_version: 1
   m_description: 
   m_id: f5896f85-e297-4a09-bcd2-b77f5a6ac30b
-  m_lastModified: 132481729317438856
+  m_lastModified: 132481928971033354
 --- !u!114 &3443248229980587347
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,6 +355,32 @@ MonoBehaviour:
     m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - m_connectionMode: 0
+    m_connections:
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: 63cda3e1-1c85-4f59-8853-057941450e66
+      m_inputNodeId: 06983dbf-df85-42b5-be30-fae32f2bd665
+      m_inputSocketId: a2b57335-4994-45c0-9174-8b146811ca21
+      m_outputNodeId: 59642528-34e2-4666-a464-87fc46a252e0
+      m_outputSocketId: 23a23f0c-b56e-4268-b0be-2b90ce4276db
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 1
+    m_canBeDeleted: 1
+    m_canBeReordered: 1
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 86
+    m_id: 23a23f0c-b56e-4268-b0be-2b90ce4276db
+    m_nodeId: 59642528-34e2-4666-a464-87fc46a252e0
+    m_socketName: OutputSocket_1
+    m_value: '{"ButtonCategory":"General","ButtonName":"Unnamed","GameEvent":"","TimeDelay":0.10000000149011612,"Trigger":4}'
+    m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_nodeType: 4
   m_allowDuplicateNodeName: 0
   m_allowEmptyNodeName: 0
@@ -280,11 +388,11 @@ MonoBehaviour:
   m_debugMode: 0
   m_useFixedUpdate: 0
   m_useLateUpdate: 0
-  m_useUpdate: 0
-  m_height: 128
+  m_useUpdate: 1
+  m_height: 152
   m_width: 216
-  m_x: 144
-  m_y: 180
+  m_x: 120
+  m_y: 168
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: f5896f85-e297-4a09-bcd2-b77f5a6ac30b
@@ -297,10 +405,7 @@ MonoBehaviour:
     Name: HUD
   m_onEnterHideViews: []
   m_onExitShowViews: []
-  m_onExitHideViews:
-  - Category: Tower Defense
-    InstantAction: 0
-    Name: HUD
+  m_onExitHideViews: []
 --- !u!114 &4332548151088030606
 MonoBehaviour:
   m_ObjectHideFlags: 1

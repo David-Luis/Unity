@@ -1,4 +1,4 @@
-﻿internal interface IPlaceableListener
+﻿public interface IPlaceableListener
 {
     void OnStartPlacing();
     void OnEndPlacing();

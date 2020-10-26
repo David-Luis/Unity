@@ -1,4 +1,4 @@
 ﻿public interface IGameSystem
 {
-    void Update();
+    void Update(float deltaTime);
 }

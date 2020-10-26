@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
         Systems.Update(Time.deltaTime);
     }
 
-    public void PlaceTurret()
+    public void PlaceTurret(string productId)
     {
         GameObject turret = Instantiate(turretPrefabs[0], Vector3.zero, Quaternion.identity);
         PlaceableComponent placeableComponent = turret.GetComponent<PlaceableComponent>();

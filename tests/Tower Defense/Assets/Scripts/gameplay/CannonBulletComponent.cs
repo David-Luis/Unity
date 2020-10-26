@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public class BulletComponent : MonoBehaviour
+public class CannonBulletComponent : BulletComponent
 {
-    private Transform target = null;
+    private Transform target;
 
     [SerializeField]
     private GameObject impactEffect = null;
@@ -11,7 +11,7 @@ public class BulletComponent : MonoBehaviour
     [SerializeField]
     private float speed = 10f;
 
-    public void Shoot(Transform target)
+    public override void Shoot(Transform target)
     {
         this.target = target;
     }
@@ -40,7 +40,9 @@ public class BulletComponent : MonoBehaviour
     {
         GameObject particleEffect = Instantiate(impactEffect, transform.position, transform.rotation);
         ParticleSystem particles = particleEffect.GetComponent<ParticleSystem>();
+#pragma warning disable CS0618 // Type or member is obsolete
         Destroy(particleEffect, particles.startLifetime + particles.duration);
+#pragma warning restore CS0618 // Type or member is obsolete
 
         Destroy(gameObject);
     }

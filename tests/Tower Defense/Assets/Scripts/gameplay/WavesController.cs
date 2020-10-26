@@ -34,7 +34,7 @@ public class WavesController : IGameSystem
         Systems.hudController.DisableWaveButton();
     }
 
-    public void Update()
+    public void Update(float dt)
     {
         
     }
