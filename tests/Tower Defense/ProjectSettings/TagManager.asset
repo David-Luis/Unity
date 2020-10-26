@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Spawner
+  - UIHud
   layers:
   - Default
   - TransparentFX

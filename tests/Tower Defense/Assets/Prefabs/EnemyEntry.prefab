@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8600264938339894240}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 3549959855098310061, guid: 387ce5390d74c474cbba84e52c699b60, type: 3}
   playerBase: {fileID: 0}
+  waves: []
 --- !u!1 &8600264938368637057
 GameObject:
   m_ObjectHideFlags: 0

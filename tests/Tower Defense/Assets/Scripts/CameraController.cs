@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     public float minY = 5f;
     public float maxY = 20f;
 
-    public float zoomSpeed = 2000f;
+    public float zoomSpeed = 20f;
     private float zoomTargetY = 0;
     private float zoomSmooth = 0.1f;
     private Vector3 velocity = Vector3.zero;
@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour
         if (Mathf.Abs(scroll) > Mathf.Epsilon)
         {
             Vector3 pos = transform.position;
-            zoomTargetY = pos.y - scroll * zoomSpeed * Time.deltaTime;
+            zoomTargetY = pos.y - scroll * zoomSpeed;
             zoomTargetY = Mathf.Clamp(zoomTargetY, minY, maxY);
         }
 

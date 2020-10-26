@@ -16,19 +16,24 @@ public class EnemySpawnerComponent : MonoBehaviour
     int nextSpawnAmount = 0;
     float waveTotalTimeSeconds = 0;
     float nextSpawnTimeSeconds = 0;
-    bool isWaveActive = true;
+    public bool IsWaveActive { get; private set; } = false;
 
     void Start()
     {
         currentWaveIndex = -1;
+    }
+
+    public void StartWave()
+    {
         currentWave = GetNextWave();
         PrepareNextSpawn();
         nextSpawnTimeSeconds = 0;
+        IsWaveActive = true;
     }
 
     void Update()
     {
-        if (isWaveActive)
+        if (IsWaveActive)
         {
             waveTotalTimeSeconds += Time.deltaTime;
             if (waveTotalTimeSeconds >= currentWave.DurationSeconds)
@@ -80,6 +85,6 @@ public class EnemySpawnerComponent : MonoBehaviour
 
     private void FinishWave()
     {
-        isWaveActive = false;
+        IsWaveActive = false;
     }
 }
