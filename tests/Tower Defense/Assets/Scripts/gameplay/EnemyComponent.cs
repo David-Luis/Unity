@@ -45,7 +45,6 @@ public class EnemyComponent : MonoBehaviour, IDestructibleListener
     {
         if (other.CompareTag("EnemyTarget"))
         {
-            Debug.Log("HOLI");
             hitTarget = other.gameObject.GetComponent<DestructibleComponent>();
         }
     }
