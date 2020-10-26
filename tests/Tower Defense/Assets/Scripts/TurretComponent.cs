@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TurretComponent : MonoBehaviour
+public class TurretComponent : MonoBehaviour, IPlaceableListener
 {
     [SerializeField]
     private GameObject rangeCilinder = null;
@@ -21,6 +21,7 @@ public class TurretComponent : MonoBehaviour
     private float maxRange = 100;
 
     private Transform target = null;
+    private bool isPlacing = false;
 
     private void Start()
     {
@@ -74,13 +75,35 @@ public class TurretComponent : MonoBehaviour
 
     void OnMouseOver()
     {
-        rangeCilinder.SetActive(true);
-        minRangeCilinder.SetActive(true);
+        if (!isPlacing)
+        {
+            rangeCilinder.SetActive(true);
+            minRangeCilinder.SetActive(true);
+        }
     }
 
     void OnMouseExit()
     {
+        if (!isPlacing)
+        {
+            rangeCilinder.SetActive(false);
+            minRangeCilinder.SetActive(false);
+        }
+    }
+
+    public void OnStartPlacing()
+    {
+        isPlacing = true;
         rangeCilinder.SetActive(false);
         minRangeCilinder.SetActive(false);
+        shootComponent.enabled = false;
+        targetLookAtComponent.enabled = false;
+    }
+
+    public void OnEndPlacing()
+    {
+        isPlacing = false;
+        shootComponent.enabled = true;
+        targetLookAtComponent.enabled = true;
     }
 }

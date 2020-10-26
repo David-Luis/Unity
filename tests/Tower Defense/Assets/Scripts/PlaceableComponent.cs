@@ -16,6 +16,12 @@ public class PlaceableComponent : MonoBehaviour
         isInPlaceableZone = false;
         placeablePlane = GameObject.FindGameObjectWithTag("PlaceablePlane");
         isPlacing = true;
+
+        IPlaceableListener[] comps = GetComponents<IPlaceableListener>();
+        foreach (IPlaceableListener c in comps)
+        {
+            c.OnStartPlacing();
+        }
     }
 
     private void Update()
@@ -68,6 +74,12 @@ public class PlaceableComponent : MonoBehaviour
     private void Place()
     {
         isPlacing = false;
+
+        IPlaceableListener[] comps = GetComponents<IPlaceableListener>();
+        foreach (IPlaceableListener c in comps)
+        {
+            c.OnEndPlacing();
+        }
     }
 
     private bool CanBePlaced()
