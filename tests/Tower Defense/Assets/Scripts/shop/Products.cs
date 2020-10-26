@@ -10,9 +10,9 @@ public class Products
 
     public Products()
     {
-        products.Add(TURRET_1, new Product(2));
-        products.Add(TURRET_2, new Product(10));
-        products.Add(TURRET_3, new Product(50));
+        products.Add(TURRET_1, new Product(10));
+        products.Add(TURRET_2, new Product(50));
+        products.Add(TURRET_3, new Product(100));
     }
 
     public Product GetProduct(string product)

@@ -11,6 +11,11 @@ public class GameController : MonoBehaviour
         Systems.Init(this);
     }
 
+    internal void OnPlayerDead()
+    {
+        //TODO: show game over
+    }
+
     private void Update()
     {
         Systems.Update(Time.deltaTime);

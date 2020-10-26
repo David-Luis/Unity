@@ -14,9 +14,10 @@ public class EnemyComponent : MonoBehaviour, IDestructibleListener
     [SerializeField]
     private float attacksPerSecond = 1f;
 
-    private float attackCountDown = 0f;
+    [SerializeField]
+    private float distanceToAttack = 1f;
 
-    DestructibleComponent hitTarget = null;
+    private float attackCountDown = 0f;
 
     void Start()
     {
@@ -41,28 +42,11 @@ public class EnemyComponent : MonoBehaviour, IDestructibleListener
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("EnemyTarget"))
-        {
-            hitTarget = other.gameObject.GetComponent<DestructibleComponent>();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("EnemyTarget"))
-        {
-            hitTarget = null;
-        }
-    }
-
     private void Update()
     {
-        if (hitTarget != null && attackCountDown <= 0)
+        if (destination != null && attackCountDown <= 0 && Vector3.Distance(destination.position, transform.position) <= distanceToAttack )
         {
-            Debug.Log("ATTACK!");
-            hitTarget.Hit(damage);
+            destination.GetComponent<DestructibleComponent>().Hit(damage);
             attackCountDown = 1f / attacksPerSecond;
         }
 

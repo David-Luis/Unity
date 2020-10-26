@@ -3,26 +3,34 @@
 public class DestructibleComponent : MonoBehaviour
 {
     [SerializeField]
-    private int life = 100;
+    private int maxHealth = 100;
+
+    private int health;
 
     private IDestructibleListener destructibleListener;
 
     public void Start()
     {
+        health = maxHealth;
         destructibleListener = GetComponent<IDestructibleListener>();
     }
 
     public void Hit(int damage)
     {
-        life -= damage;
+        health -= damage;
         if (destructibleListener!=null)
         {
-            destructibleListener.OnHit(life);
+            destructibleListener.OnHit(health);
         }
     }
 
-    public int GetLife()
+    public int GetHealth()
     {
-        return life;
+        return health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 }
