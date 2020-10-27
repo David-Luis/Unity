@@ -8,9 +8,12 @@ public class HudController : IGameSystem
 {
     Button buttonWave = null;
     TextMeshProUGUI coinsText = null;
+    ShakeScaleAnimationUI coinsAnimation = null;
 
     const int TURRETS_AMOUNT = 3;
     List<TurretUIHudComponent> turretHudComponents;
+
+    int currrentCoins = 0;
 
     public HudController()
     {
@@ -64,7 +67,8 @@ public class HudController : IGameSystem
         GameObject hudGameObject = GameObject.FindGameObjectWithTag("UIHud");
 
         buttonWave = hudGameObject.transform.Find("Button - StartWave").GetComponent<Button>();
-        coinsText = hudGameObject.transform.Find("coinsPlayer").GetComponent<TextMeshProUGUI>();
+        coinsText = hudGameObject.transform.Find("CoinsInfo/coinsPlayer").GetComponent<TextMeshProUGUI>();
+        coinsAnimation = hudGameObject.transform.Find("CoinsInfo").GetComponent<ShakeScaleAnimationUI>();
 
         turretHudComponents = new List<TurretUIHudComponent>(TURRETS_AMOUNT);
         for (int i = 0; i < TURRETS_AMOUNT; i++)
@@ -85,8 +89,19 @@ public class HudController : IGameSystem
 
     public void Refresh()
     {
-        coinsText.SetText(Systems.currencyModel.GetCoins().ToString());
+        if (Systems.currencyModel.GetCoins() > currrentCoins)
+        {
+            PlayGainCoinsAnimation();
+        }
+
+        currrentCoins = Systems.currencyModel.GetCoins();
+        coinsText.SetText(currrentCoins.ToString());
         RefreshTurretsInfo();
+    }
+
+    private void PlayGainCoinsAnimation()
+    {
+        coinsAnimation.Animate();
     }
 
     public void Update(float deltaTime) { }

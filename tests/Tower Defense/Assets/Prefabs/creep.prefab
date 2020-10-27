@@ -73,6 +73,8 @@ MonoBehaviour:
   damage: 1
   attacksPerSecond: 1
   distanceToAttack: 1
+  deadRewardEffect: {fileID: 435828518595633618, guid: 63b9b8848ddfb48438d4b1996e2ee8e5,
+    type: 3}
 --- !u!114 &8593711785352680940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +164,7 @@ GameObject:
   - component: {fileID: 6872094588554056482}
   - component: {fileID: 5031278728630375236}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: heatlhBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

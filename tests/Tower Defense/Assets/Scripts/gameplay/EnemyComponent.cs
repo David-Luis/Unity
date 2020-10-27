@@ -17,6 +17,9 @@ public class EnemyComponent : MonoBehaviour, IDestructibleListener
     [SerializeField]
     private float distanceToAttack = 1f;
 
+    [SerializeField]
+    private GameObject deadRewardEffect = null;
+
     private float attackCountDown = 0f;
 
     void Start()
@@ -37,6 +40,12 @@ public class EnemyComponent : MonoBehaviour, IDestructibleListener
     {
         if (life <= 0)
         {
+            GameObject particleEffect = Instantiate(deadRewardEffect, transform.position, transform.rotation);
+            ParticleSystem particles = particleEffect.GetComponent<ParticleSystem>();
+#pragma warning disable CS0618 // Type or member is obsolete
+            Destroy(particleEffect, particles.startLifetime + particles.duration);
+#pragma warning restore CS0618 // Type or member is obsolete
+
             Systems.gameController.OnEnemyDead(coinsReward);
             Destroy(gameObject);
         }
