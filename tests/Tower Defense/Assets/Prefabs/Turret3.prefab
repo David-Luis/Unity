@@ -739,11 +739,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6958224249674095860}
   - component: {fileID: 3817336545973071192}
-  - component: {fileID: 2115265260658264119}
   - component: {fileID: 6623785742024313361}
   - component: {fileID: 9121462419769145343}
   - component: {fileID: 893104737519970490}
   - component: {fileID: -7122922427334308059}
+  - component: {fileID: 6377186646071300142}
   m_Layer: 0
   m_Name: Turret3
   m_TagString: Placeable
@@ -780,25 +780,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangeCilinder: {fileID: 1757523779589808260}
   minRangeCilinder: {fileID: 4216080109448722783}
-  shootComponent: {fileID: 2115265260658264119}
+  shootComponent: {fileID: 6377186646071300142}
   targetLookAtComponent: {fileID: 6038708698439880469}
-  minRange: 1
-  maxRange: 3.5
---- !u!114 &2115265260658264119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6958224249674095859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781cdfedea7695a459eebee954100154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootPosition: {fileID: 6403693366633835417}
-  bullet: {fileID: 2199999913884995197, guid: bb690f2ab08f77d44bee5f91cc73aab0, type: 3}
-  fireRate: 0.3
+  minRange: 0.2
+  maxRange: 3
 --- !u!65 &6623785742024313361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -856,6 +841,21 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.5, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &6377186646071300142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958224249674095859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf90a4a36978e5c45b3b82cf1eb3ac04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPosition: {fileID: 6403693366633835417}
+  bullet: {fileID: 2199999913884995197, guid: f3678e14c3042e94b9b4dad23322329a, type: 3}
+  fireRate: 10
 --- !u!1 &6958224250759446904
 GameObject:
   m_ObjectHideFlags: 0

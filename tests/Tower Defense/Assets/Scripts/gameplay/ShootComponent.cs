@@ -5,19 +5,19 @@ using UnityEngine;
 public class ShootComponent : MonoBehaviour
 {
     [SerializeField]
-    private Transform shootPosition = null;
+    protected Transform shootPosition = null;
 
     [SerializeField]
-    private GameObject bullet = null;
+    protected GameObject bullet = null;
 
-    private Transform target = null;
+    protected Transform target = null;
 
     [SerializeField]
     private float fireRate = 2f;
 
     private float fireCountDown = 0f;
 
-    public void SetTarget(Transform target)
+    public virtual void SetTarget(Transform target)
     {
         this.target = target;
     }
@@ -33,7 +33,7 @@ public class ShootComponent : MonoBehaviour
         fireCountDown -= Time.deltaTime;
     }
 
-    private void Shoot()
+    protected virtual void Shoot()
     {
         GameObject bulletGameObject = Instantiate(bullet, shootPosition.transform.position, shootPosition.transform.rotation);
         BulletComponent bulletComponent = bulletGameObject.GetComponent<BulletComponent>();

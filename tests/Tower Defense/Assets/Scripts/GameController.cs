@@ -7,8 +7,8 @@ public class GameController : MonoBehaviour
     private GameObject[] turretPrefabs = null;
 
     private Dictionary<string, int> turretIndexPerProduct = new Dictionary<string, int>() {
-            { Products.TURRET_1, 0 },
-            { Products.TURRET_2, 1 },
+            { Products.TURRET_1, 2 },
+            { Products.TURRET_2, 2 },
             { Products.TURRET_3, 2 }
         };
 

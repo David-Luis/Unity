@@ -6304,6 +6304,7 @@ MonoBehaviour:
   turretPrefabs:
   - {fileID: 6958224249674095859, guid: 498ee83977ac8a84086ab0808c9e5f52, type: 3}
   - {fileID: 6958224249674095859, guid: 7c7478e328a75b0439e5b30edeee06ad, type: 3}
+  - {fileID: 6958224249674095859, guid: 2196d4e8856b85f46ab1d78d1c9b2082, type: 3}
 --- !u!4 &515019830
 Transform:
   m_ObjectHideFlags: 0
