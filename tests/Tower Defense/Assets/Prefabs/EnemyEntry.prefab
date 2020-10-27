@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8600264938339894241}
   - component: {fileID: 8600264938339894240}
+  - component: {fileID: 503649121}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Spawner
@@ -45,11 +46,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 3549959855098310061, guid: 387ce5390d74c474cbba84e52c699b60, type: 3}
   playerBase: {fileID: 0}
-  spawnArea: {fileID: 0}
   waves:
   - {fileID: 195993984017680606, guid: ad73c107bf19a1b4db18e675c3fece44, type: 3}
   - {fileID: 2171542767783078678, guid: c96e3008da9b2ba49bb5e69622c8091b, type: 3}
   - {fileID: 424185147530784885, guid: 42ed37e5228f56d4ebbdf6eb841e974b, type: 3}
+  - {fileID: 473843748307301083, guid: 04986dadae231a44a8e0786be47470f5, type: 3}
+  endlessWave: {fileID: 503649121}
+  randomDeltaStartPosition: 1
+--- !u!114 &503649121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8600264938339894254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bba2b1d35300b74d95eead540d1eae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IncreaseDurationSeconds: 1
+  DecreaseMinNextSpawnInSeconds: 0.01
+  DecreaseMaxNextSpawnInSeconds: 0.01
+  IncreaseHealthEnemy: 10
+  enemy: {fileID: 0}
 --- !u!1 &8600264938368637057
 GameObject:
   m_ObjectHideFlags: 0

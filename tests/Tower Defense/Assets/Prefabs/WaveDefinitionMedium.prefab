@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2ca553f7132234088cc0c04a9bcb82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DurationSeconds: 70
+  DurationSeconds: 40
   MinSpawnSimultaniousEnemies: 1
   MaxSpawnSimultaniousEnemies: 2
   MinNextSpawnInSeconds: 1

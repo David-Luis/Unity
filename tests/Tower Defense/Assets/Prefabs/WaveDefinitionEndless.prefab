@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 473843748307301080}
   - component: {fileID: 473843748307301083}
   m_Layer: 0
-  m_Name: WaveDefinitionExtreme
+  m_Name: WaveDefinitionEndless
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DurationSeconds: 60
-  MinSpawnSimultaniousEnemies: 1
-  MaxSpawnSimultaniousEnemies: 2
+  MinSpawnSimultaniousEnemies: 3
+  MaxSpawnSimultaniousEnemies: 4
   MinNextSpawnInSeconds: 1
-  MaxNextSpawnInSeconds: 3
+  MaxNextSpawnInSeconds: 2
+  IncreaseHealthEnemy: 40
   enemy: {fileID: 3549959855098310061, guid: 387ce5390d74c474cbba84e52c699b60, type: 3}
