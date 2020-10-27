@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class HudView : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class HudView : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI waveName = null;
+
+    [SerializeField]
+    GameObject waveFinished = null;
 
     int currrentCoins = 0;
 
@@ -61,5 +65,18 @@ public class HudView : MonoBehaviour
     private void PlayGainCoinsAnimation()
     {
         coinsAnimation.Animate();
+    }
+
+    public void ShowEndWaveAnnouncement()
+    {
+        waveFinished.SetActive(true);
+        waveFinished.transform.localScale = new Vector3(0, 0, 0);
+        waveFinished.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce).OnComplete(() =>
+        {
+            waveFinished.transform.DOScale(Vector3.zero, 0.25f).SetDelay(1.5f).SetEase(Ease.OutCubic).OnComplete(() =>
+            {
+                waveFinished.SetActive(false);
+            });
+        });
     }
 }

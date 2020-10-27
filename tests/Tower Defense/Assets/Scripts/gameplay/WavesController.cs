@@ -47,7 +47,7 @@ public class WavesController : IGameSystem
             }
         }
 
-        Systems.hudController.DisableWaveButton();
+        Systems.hudController.StartWave();
     }
 
     public string GetCurrentWaveName()
@@ -104,7 +104,7 @@ public class WavesController : IGameSystem
             if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
             {
                 isWaveActive = false;
-                Systems.hudController.EnableWaveButton();
+                Systems.hudController.FinishWave();
             }
         }
     }

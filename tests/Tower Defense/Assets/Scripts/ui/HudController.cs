@@ -1,9 +1,5 @@
 ﻿using Doozy.Engine;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
-using System;
 
 public class HudController : IGameSystem
 {
@@ -65,15 +61,16 @@ public class HudController : IGameSystem
         }
     }
 
-    public void DisableWaveButton()
+    public void StartWave()
     {
         hudView.DisableWaveButton();
         Refresh();
     }
 
-    public void EnableWaveButton()
+    public void FinishWave()
     {
         hudView.EnableWaveButton();
+        hudView.ShowEndWaveAnnouncement();
         Refresh();
     }
 

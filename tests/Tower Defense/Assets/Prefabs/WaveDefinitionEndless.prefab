@@ -48,5 +48,5 @@ MonoBehaviour:
   MaxSpawnSimultaniousEnemies: 4
   MinNextSpawnInSeconds: 1
   MaxNextSpawnInSeconds: 2
-  IncreaseHealthEnemy: 40
+  IncreaseHealthEnemy: 100
   enemy: {fileID: 3549959855098310061, guid: 387ce5390d74c474cbba84e52c699b60, type: 3}
