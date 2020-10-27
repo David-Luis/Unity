@@ -22,7 +22,7 @@ public class LaserBulletComponent : BulletComponent
 
     private void HitTarget()
     {
-        GameObject particleEffect = Instantiate(impactEffect, transform.position, transform.rotation);
+        GameObject particleEffect = Instantiate(impactEffect, target.position, Quaternion.identity);
         ParticleSystem particles = particleEffect.GetComponent<ParticleSystem>();
 #pragma warning disable CS0618 // Type or member is obsolete
         Destroy(particleEffect, particles.startLifetime + particles.duration);
