@@ -7,6 +7,10 @@
         this.coins = coins;
     }
 
+    public void Destroy()
+    {
+    }
+
     public virtual void SpendCoins(int value)
     {
         coins -= value;

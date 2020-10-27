@@ -9,6 +9,10 @@ public class PurchasesController : IGameSystem
         products = new Products();
     }
 
+    public void Destroy()
+    {
+    }
+
     public int GetProductValue(string productId)
     {
         Product product = products.GetProduct(productId);

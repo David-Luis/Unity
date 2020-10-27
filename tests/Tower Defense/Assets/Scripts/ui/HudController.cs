@@ -11,10 +11,11 @@ public class HudController : IGameSystem
 
     public HudController()
     {
+        hudView = null;
         Message.AddListener<GameEventMessage>(OnMessage);
     }
 
-    ~HudController()
+    public void Destroy()
     {
         Message.RemoveListener<GameEventMessage>(OnMessage);
     }

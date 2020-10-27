@@ -30,6 +30,22 @@ public class Systems : MonoBehaviour
         gameSystems.Add(purchasesController);
     }
 
+    public static void Destroy()
+    {
+        gameSystems.Clear();
+
+        hudController.Destroy();
+        wavesController.Destroy();
+        currencyModel.Destroy();
+        purchasesController.Destroy();
+
+        gameController = null;
+        hudController = null;
+        wavesController = null;
+        currencyModel = null;
+        purchasesController = null;
+    }
+
     public static void Update(float deltaTime)
     {
         foreach (IGameSystem gameSystem in gameSystems)

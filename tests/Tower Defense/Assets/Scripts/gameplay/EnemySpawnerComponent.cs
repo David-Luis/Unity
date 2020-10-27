@@ -10,6 +10,9 @@ public class EnemySpawnerComponent : MonoBehaviour
     [SerializeField]
     private WaveDefinition[] waves = null;
 
+    [SerializeField]
+    private float randomDeltaStartPosition = 1;
+
     private WaveDefinition currentWave = null;
     private int currentWaveIndex;
     int increaseHelthEnemy = 0;
@@ -79,7 +82,11 @@ public class EnemySpawnerComponent : MonoBehaviour
     {
         for (int i = 0; i < nextSpawnAmount; i++)
         {
-            GameObject newEnemy = Instantiate(enemy, transform.position, Quaternion.identity, transform);
+            Vector3 spawnPosition = new Vector3(transform.position.x + Random.Range(-randomDeltaStartPosition, randomDeltaStartPosition),
+                                                transform.position.y,
+                                                transform.position.z + Random.Range(-randomDeltaStartPosition, randomDeltaStartPosition));
+
+            GameObject newEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity, transform);
             EnemyComponent enemyComponent = newEnemy.GetComponent<EnemyComponent>();
             enemyComponent.AddExtraHealth(increaseHelthEnemy);
             enemyComponent.SetDestination(playerBase.transform);

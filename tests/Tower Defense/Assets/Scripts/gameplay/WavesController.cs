@@ -16,6 +16,10 @@ public class WavesController : IGameSystem
         DisablePortals();
     }
 
+    public void Destroy()
+    {
+    }
+
     public bool CanStartWave()
     {
         return !isWaveSpawining && !isWaveActive;
