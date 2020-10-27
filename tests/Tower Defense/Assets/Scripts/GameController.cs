@@ -1,10 +1,16 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] turretPrefabs = null;
+
+    private Dictionary<string, int> turretIndexPerProduct = new Dictionary<string, int>() {
+            { Products.TURRET_1, 0 },
+            { Products.TURRET_2, 1 },
+            { Products.TURRET_3, 2 }
+        };
 
     private void Start()
     {
@@ -23,7 +29,7 @@ public class GameController : MonoBehaviour
 
     public void PlaceTurret(string productId)
     {
-        GameObject turret = Instantiate(turretPrefabs[0], Vector3.zero, Quaternion.identity);
+        GameObject turret = Instantiate(turretPrefabs[turretIndexPerProduct[productId]], Vector3.zero, Quaternion.identity);
         PlaceableComponent placeableComponent = turret.GetComponent<PlaceableComponent>();
         placeableComponent.StartPlacing();
     }

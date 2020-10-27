@@ -24,6 +24,12 @@ public class DestructibleComponent : MonoBehaviour
         }
     }
 
+    public void IncreaseMaxHealth(int value)
+    {
+        maxHealth += value;
+        health = value;
+    }
+
     public int GetHealth()
     {
         return health;

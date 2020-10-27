@@ -12,6 +12,7 @@ public class EnemySpawnerComponent : MonoBehaviour
 
     private WaveDefinition currentWave = null;
     private int currentWaveIndex;
+    int increaseHelthEnemy = 0;
 
     int nextSpawnAmount = 0;
     float waveTotalTimeSeconds = 0;
@@ -29,6 +30,7 @@ public class EnemySpawnerComponent : MonoBehaviour
         PrepareNextSpawn();
         nextSpawnTimeSeconds = 0;
         IsWaveActive = true;
+        increaseHelthEnemy = currentWave.IncreaseHealthEnemy;
     }
 
     void Update()
@@ -79,6 +81,7 @@ public class EnemySpawnerComponent : MonoBehaviour
         {
             GameObject newEnemy = Instantiate(enemy, transform.position, Quaternion.identity, transform);
             EnemyComponent enemyComponent = newEnemy.GetComponent<EnemyComponent>();
+            enemyComponent.AddExtraHealth(increaseHelthEnemy);
             enemyComponent.SetDestination(playerBase.transform);
         }
     }

@@ -17338,6 +17338,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1168708652}
     m_Modifications:
+    - target: {fileID: 2426881327506400810, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
+        type: 3}
+      propertyPath: OnClick.OnTrigger.GameEvents.Array.data[0]
+      value: onPurchaseTurret3
+      objectReference: {fileID: 0}
     - target: {fileID: 2426881327506400813, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -22716,7 +22721,7 @@ PrefabInstance:
     - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
       propertyPath: waves.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
@@ -22728,6 +22733,18 @@ PrefabInstance:
       propertyPath: waves.Array.data[0]
       value: 
       objectReference: {fileID: 195993984017680606, guid: ad73c107bf19a1b4db18e675c3fece44,
+        type: 3}
+    - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
+        type: 3}
+      propertyPath: waves.Array.data[1]
+      value: 
+      objectReference: {fileID: 2171542767783078678, guid: c96e3008da9b2ba49bb5e69622c8091b,
+        type: 3}
+    - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
+        type: 3}
+      propertyPath: waves.Array.data[2]
+      value: 
+      objectReference: {fileID: 424185147530784885, guid: 42ed37e5228f56d4ebbdf6eb841e974b,
         type: 3}
     - target: {fileID: 8600264938339894254, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
@@ -23223,7 +23240,7 @@ PrefabInstance:
     - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
       propertyPath: waves.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
@@ -23235,6 +23252,18 @@ PrefabInstance:
       propertyPath: waves.Array.data[0]
       value: 
       objectReference: {fileID: 195993984017680606, guid: ad73c107bf19a1b4db18e675c3fece44,
+        type: 3}
+    - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
+        type: 3}
+      propertyPath: waves.Array.data[1]
+      value: 
+      objectReference: {fileID: 2171542767783078678, guid: c96e3008da9b2ba49bb5e69622c8091b,
+        type: 3}
+    - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
+        type: 3}
+      propertyPath: waves.Array.data[2]
+      value: 
+      objectReference: {fileID: 424185147530784885, guid: 42ed37e5228f56d4ebbdf6eb841e974b,
         type: 3}
     - target: {fileID: 8600264938339894254, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
@@ -27146,6 +27175,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1168708652}
     m_Modifications:
+    - target: {fileID: 2426881327506400810, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
+        type: 3}
+      propertyPath: OnClick.OnTrigger.GameEvents.Array.data[0]
+      value: onPurchaseTurret2
+      objectReference: {fileID: 0}
     - target: {fileID: 2426881327506400813, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -27174,7 +27208,7 @@ PrefabInstance:
     - target: {fileID: 2426881327506400813, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.4999962
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2426881327506400813, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
         type: 3}
@@ -32907,7 +32941,7 @@ PrefabInstance:
     - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
       propertyPath: waves.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}
@@ -32919,6 +32953,18 @@ PrefabInstance:
       propertyPath: waves.Array.data[0]
       value: 
       objectReference: {fileID: 195993984017680606, guid: ad73c107bf19a1b4db18e675c3fece44,
+        type: 3}
+    - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
+        type: 3}
+      propertyPath: waves.Array.data[1]
+      value: 
+      objectReference: {fileID: 2171542767783078678, guid: c96e3008da9b2ba49bb5e69622c8091b,
+        type: 3}
+    - target: {fileID: 8600264938339894240, guid: 3510a607a8773424fb600e5bcc52867a,
+        type: 3}
+      propertyPath: waves.Array.data[2]
+      value: 
+      objectReference: {fileID: 424185147530784885, guid: 42ed37e5228f56d4ebbdf6eb841e974b,
         type: 3}
     - target: {fileID: 8600264938339894254, guid: 3510a607a8773424fb600e5bcc52867a,
         type: 3}

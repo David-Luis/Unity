@@ -40,6 +40,14 @@ public class HudController : IGameSystem
             }
             Refresh();
         }
+        else if (message.EventName == "onPurchaseTurret2")
+        {
+            if (Systems.purchasesController.Purchase(Products.TURRET_2))
+            {
+                Systems.gameController.PlaceTurret(Products.TURRET_2);
+            }
+            Refresh();
+        }
         else if (message.EventName == "onShowHud")
         {
             GetView();

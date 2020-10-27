@@ -61,4 +61,9 @@ public class EnemyComponent : MonoBehaviour, IDestructibleListener
 
         attackCountDown -= Time.deltaTime;
     }
+
+    public void AddExtraHealth(int value)
+    {
+        GetComponent<DestructibleComponent>().IncreaseMaxHealth(value);
+    }
 }
