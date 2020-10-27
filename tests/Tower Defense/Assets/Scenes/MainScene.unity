@@ -2916,6 +2916,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241358492}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &244735444 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2426881328428285974, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1960579943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8448cc09736f04a93a732184fb06ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &258123894
 GameObject:
   m_ObjectHideFlags: 0
@@ -4283,6 +4295,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92f8eae6b9cd89041adc44709b6a9791, type: 3}
+--- !u!114 &342110362 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2426881328428285974, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1210154176}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8448cc09736f04a93a732184fb06ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &344056239
 GameObject:
   m_ObjectHideFlags: 0
@@ -12801,6 +12825,7 @@ GameObject:
   - component: {fileID: 1168708655}
   - component: {fileID: 1168708654}
   - component: {fileID: 1168708653}
+  - component: {fileID: 1168708659}
   m_Layer: 0
   m_Name: View - HUD
   m_TagString: UIHud
@@ -13524,6 +13549,25 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1168708659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168708651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d93e111a0c08ea4cadf40769059c084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonWave: {fileID: 2059853279}
+  coinsText: {fileID: 2108101222}
+  coinsAnimation: {fileID: 1177558153}
+  turretHudComponents:
+  - {fileID: 1746322650}
+  - {fileID: 244735444}
+  - {fileID: 342110362}
 --- !u!1 &1171594926
 GameObject:
   m_ObjectHideFlags: 0
@@ -22822,6 +22866,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744201797}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1746322650 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2426881328428285974, guid: 7858ab0b73df4ff4fb7956d274bfda4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2426881327399936766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8448cc09736f04a93a732184fb06ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1757121747
 GameObject:
   m_ObjectHideFlags: 0
