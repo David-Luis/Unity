@@ -4,6 +4,7 @@ using UnityEngine;
 public class WavesController : IGameSystem
 {
     private int currentWave = 0;
+    private bool isWaveSpawining = false;
     private bool isWaveActive = false;
 
     GameObject[] currentWaveSpawners = null;
@@ -17,13 +18,14 @@ public class WavesController : IGameSystem
 
     public bool CanStartWave()
     {
-        return !isWaveActive;
+        return !isWaveSpawining && !isWaveActive;
     }
 
-    public void StartWave()
+    public void StartNextWave()
     {
         EnablePortals();
 
+        isWaveSpawining = true;
         isWaveActive = true;
         currentWave++;
 
@@ -44,6 +46,18 @@ public class WavesController : IGameSystem
         Systems.hudController.DisableWaveButton();
     }
 
+    public string GetCurrentWaveName()
+    {
+        if (CanStartWave())
+        {
+            return "Next -> Wave " + (currentWave+1);
+        }
+        else
+        {
+            return "Wave " + currentWave;
+        }
+    }
+
     private void EnablePortals()
     {
         foreach (GameObject portal in portals)
@@ -62,7 +76,7 @@ public class WavesController : IGameSystem
 
     public void Update(float dt)
     {
-        if (isWaveActive)
+        if (isWaveSpawining)
         {
             bool isSpawining = false;
             foreach (GameObject gameObject in currentWaveSpawners)
@@ -77,8 +91,16 @@ public class WavesController : IGameSystem
 
             if (!isSpawining)
             {
-                isWaveActive = false;
+                isWaveSpawining = false;
                 DisablePortals();
+            }
+        }
+        else if (isWaveActive)
+        {
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+            {
+                isWaveActive = false;
+                Systems.hudController.EnableWaveButton();
             }
         }
     }

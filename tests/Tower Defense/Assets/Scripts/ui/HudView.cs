@@ -16,6 +16,9 @@ public class HudView : MonoBehaviour
     [SerializeField]
     TurretUIHudComponent[] turretHudComponents = null;
 
+    [SerializeField]
+    TextMeshProUGUI waveName = null;
+
     int currrentCoins = 0;
 
     public void EnableWaveButton()
@@ -45,6 +48,8 @@ public class HudView : MonoBehaviour
 
         currrentCoins = Systems.currencyModel.GetCoins();
         coinsText.SetText(currrentCoins.ToString());
+        waveName.SetText(Systems.wavesController.GetCurrentWaveName());
+
         RefreshTurretsInfo();
     }
 

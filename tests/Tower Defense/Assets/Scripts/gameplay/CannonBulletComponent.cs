@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CannonBulletComponent : BulletComponent
 {
-    private Transform target;
+    private Transform target = null;
 
     [SerializeField]
     private GameObject impactEffect = null;
@@ -41,7 +41,7 @@ public class CannonBulletComponent : BulletComponent
         GameObject particleEffect = Instantiate(impactEffect, transform.position, transform.rotation);
         ParticleSystem particles = particleEffect.GetComponent<ParticleSystem>();
 #pragma warning disable CS0618 // Type or member is obsolete
-        Destroy(particleEffect, particles.startLifetime + particles.duration);
+        //Destroy(particleEffect, particles.startLifetime + particles.duration);
 #pragma warning restore CS0618 // Type or member is obsolete
 
         DestructibleComponent destructibleComponent = target.GetComponent<DestructibleComponent>();

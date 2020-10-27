@@ -27,8 +27,10 @@ public class HudController : IGameSystem
         {
             if (Systems.wavesController.CanStartWave())
             {
-                Systems.wavesController.StartWave();
+                Systems.wavesController.StartNextWave();
             }
+
+            Refresh();
         }
         else if (message.EventName == "onPurchaseTurret1")
         {
@@ -36,7 +38,7 @@ public class HudController : IGameSystem
             {
                 Systems.gameController.PlaceTurret(Products.TURRET_1);
             }
-            hudView.Refresh();
+            Refresh();
         }
         else if (message.EventName == "onShowHud")
         {
@@ -45,16 +47,22 @@ public class HudController : IGameSystem
         }
     }
 
-    internal void DisableWaveButton()
+    public void DisableWaveButton()
     {
         hudView.DisableWaveButton();
+        Refresh();
+    }
+
+    public void EnableWaveButton()
+    {
+        hudView.EnableWaveButton();
+        Refresh();
     }
 
     private void GetView()
     {
         hudView = GameObject.FindGameObjectWithTag("UIHud").GetComponent<HudView>();
     }
-
 
     public void Refresh()
     {
