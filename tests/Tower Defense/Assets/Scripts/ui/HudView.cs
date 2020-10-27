@@ -21,6 +21,11 @@ public class HudView : MonoBehaviour
 
     int currrentCoins = 0;
 
+    public void Start()
+    {
+        Systems.hudController.OnShowHud();
+    }
+
     public void EnableWaveButton()
     {
         buttonWave.interactable = true;

@@ -40,9 +40,9 @@ MonoBehaviour:
   RecentlyOpenedGraphs:
   - {fileID: 11400000, guid: a767f0257f3543a41a1c88a0e4b34c99, type: 2}
   CopiedNodes: []
-  DeletedNodes: []
-  SelectedNodes:
-  - {fileID: 3443248229980587347, guid: a767f0257f3543a41a1c88a0e4b34c99, type: 2}
+  DeletedNodes:
+  - {fileID: -7896204402935901500, guid: a767f0257f3543a41a1c88a0e4b34c99, type: 2}
+  SelectedNodes: []
   GraphTabs:
   - IsRootTab: 1
     Graph: {fileID: 11400000, guid: a767f0257f3543a41a1c88a0e4b34c99, type: 2}

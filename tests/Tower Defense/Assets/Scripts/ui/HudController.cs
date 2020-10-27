@@ -19,6 +19,12 @@ public class HudController : IGameSystem
         Message.RemoveListener<GameEventMessage>(OnMessage);
     }
 
+    public void OnShowHud()
+    {
+        GetView();
+        Refresh();
+    }
+
     private void OnMessage(GameEventMessage message)
     {
         if (message == null) return;
@@ -48,9 +54,12 @@ public class HudController : IGameSystem
             }
             Refresh();
         }
-        else if (message.EventName == "onShowHud")
+        else if (message.EventName == "onPurchaseTurret3")
         {
-            GetView();
+            if (Systems.purchasesController.Purchase(Products.TURRET_3))
+            {
+                Systems.gameController.PlaceTurret(Products.TURRET_3);
+            }
             Refresh();
         }
     }
